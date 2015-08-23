@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" ng-app="codeProject">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,8 +13,9 @@
         <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
     @endif
 
-    <!-- Fonts -->
+    <!-- Fonts
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+    -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,7 +44,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
-                    <li><a href="{{ url('/auth/login') }}">Login</a></li>
+                    <li><a href="#/login">Login</a></li>
                     <li><a href="{{ url('/auth/register') }}">Register</a></li>
                 @else
                     <li class="dropdown">
@@ -58,7 +59,7 @@
     </div>
 </nav>
 
-@yield('content')
+<div ng-view></div>
 
 <!-- Scripts -->
 @if(Config::get('app.debug'))
@@ -71,6 +72,13 @@
     <script src="{{ asset('build/js/vendor/angular-messages.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/ui-bootstrap.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/navbar.min.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/query-string.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}"></script>
+
+    <script src="{{ asset('build/js/app.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/homeController.js') }}"></script>
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif
