@@ -1,11 +1,32 @@
 'use strict';
 
 angular.module('codeProject.controllers', ['ngMessages', 'angular-oauth2']);
-angular.module('codeProject', ['ngRoute', 'angular-oauth2', 'codeProject.controllers']);
+angular.module('codeProject.services', ['ngResource']);
+
+angular.module('codeProject', [
+    'ngRoute',
+    'angular-oauth2',
+    'codeProject.controllers',
+    'codeProject.services'
+]);
 
 angular.module('codeProject')
-    .config(['$routeProvider', 'OAuthProvider',
-        function($routeProvider, OAuthProvider){
+    .provider('codeProjectConfig', function(){
+        var config = {
+            baseUrl: 'http://codeproject.dev',
+        };
+
+        return {
+            config: config,
+            $get: function(){
+                return config;
+            }
+        }
+});
+
+angular.module('codeProject')
+    .config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
+        function($routeProvider, OAuthProvider, OAuthTokenProvider, codeProjectConfigProvider){
             $routeProvider
                 .when('/login', {
                     templateUrl: 'build/html/login.html',
@@ -15,15 +36,38 @@ angular.module('codeProject')
                     templateUrl: 'build/html/home.html',
                     controller: 'HomeController',
                 })
+                .when('/clientes',{
+                    templateUrl: 'build/html/client/list.html',
+                    controller: 'ClientListController',
+                })
+                .when('/clientes/novo',{
+                    templateUrl: 'build/html/client/new.html',
+                    controller: 'ClientNewController',
+                })
+                .when('/clientes/:id/editar',{
+                    templateUrl: 'build/html/client/edit.html',
+                    controller: 'ClientEditController',
+                })
+                .when('/clientes/:id/remover',{
+                    templateUrl: 'build/html/client/remove.html',
+                    controller: 'ClientRemoveController',
+                })
                 .otherwise({
                     redirectTo: '/login',
                 });
 
             OAuthProvider.configure({
-                baseUrl: 'http://codeproject.dev',
+                baseUrl: codeProjectConfigProvider.config.baseUrl,
                 clientId: 'appid1',
                 clientSecret: 'secret',
                 grantPath: '/oauth/access_token',
+            });
+
+            OAuthTokenProvider.configure({
+                name: 'token',
+                options: {
+                    secure: false
+                }
             });
     }]);
 
@@ -41,6 +85,6 @@ angular.module('codeProject')
             }
 
             // Redirect to `/login` with the `error_reason`.
-            return $window.location.href = '/login?error_reason=' + rejection.data.error;
+            return $window.location.href = '#/login?error_reason=' + rejection.data.error;
         });
     }]);
