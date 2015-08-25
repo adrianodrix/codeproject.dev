@@ -36,21 +36,41 @@ angular.module('codeProject')
                     templateUrl: 'build/html/home.html',
                     controller: 'HomeController',
                 })
-                .when('/clientes',{
+                .when('/clients',{
                     templateUrl: 'build/html/client/list.html',
                     controller: 'ClientListController',
                 })
-                .when('/clientes/novo',{
+                .when('/clients/new',{
                     templateUrl: 'build/html/client/new.html',
                     controller: 'ClientNewController',
                 })
-                .when('/clientes/:id/editar',{
+                .when('/clients/:id/edit',{
                     templateUrl: 'build/html/client/edit.html',
                     controller: 'ClientEditController',
                 })
-                .when('/clientes/:id/remover',{
+                .when('/clients/:id/remove',{
                     templateUrl: 'build/html/client/remove.html',
                     controller: 'ClientRemoveController',
+                })
+                .when('/project/:id/notes',{
+                    templateUrl: 'build/html/project/note/list.html',
+                    controller: 'ProjectNoteListController',
+                })
+                .when('/project/:id/notes/:noteId',{
+                    templateUrl: 'build/html/project/note/show.html',
+                    controller: 'ProjectNoteShowController',
+                })
+                .when('/project/:id/notes/:noteId/new',{
+                    templateUrl: 'build/html/project/note/new.html',
+                    controller: 'ProjectNoteNewController',
+                })
+                .when('/project/:id/notes/:noteId/edit',{
+                    templateUrl: 'build/html/project/note/edit.html',
+                    controller: 'ProjectNoteEditController',
+                })
+                .when('/project/:id/notes/:noteId/remove',{
+                    templateUrl: 'build/html/project/note/remove.html',
+                    controller: 'ProjectNoteRemoveController',
                 })
                 .otherwise({
                     redirectTo: '/login',

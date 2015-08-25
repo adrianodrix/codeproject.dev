@@ -40,20 +40,15 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="#/clients">Clients</a></li>
+                <li><a href="#/project/1/notes">Notes</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                @if (Auth::guest())
-                    <li><a href="#/login">Login</a></li>
-                    <li><a href="{{ url('/auth/register') }}">Register</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
-                        </ul>
-                    </li>
-                @endif
+
+                <li><a href="#/login">Login</a></li>
+                <li><a href="{{ url('/auth/register') }}">Register</a></li>
+
             </ul>
         </div>
     </div>
@@ -81,13 +76,23 @@
     <!-- CONTROLLERS -->
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/homeController.js') }}"></script>
+
     <script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
 
+    <script src="{{ asset('build/js/controllers/project/note/list.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/note/show.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/note/new.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/note/edit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/note/remove.js') }}"></script>
+
     <!-- SERVICES -->
     <script src="{{ asset('build/js/services/client.js') }}"></script>
+    <script src="{{ asset('build/js/services/project.js') }}"></script>
+    <script src="{{ asset('build/js/services/projectNote.js') }}"></script>
+
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif

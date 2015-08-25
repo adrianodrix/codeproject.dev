@@ -5,7 +5,7 @@
                 <div class="panel-heading">Listagem de Clientes</div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <a ng-href="#/clientes/novo" class="btn btn-success">Novo</a>
+                        <a ng-href="#/clients/new" class="btn btn-success">Novo</a>
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
@@ -23,8 +23,8 @@
                                     <td>{{ client.email | lowercase }}</td>
                                     <td>{{ client.phone }}</td>
                                     <td>
-                                        <a ng-href="#/clientes/{{ client.id }}/editar" class="btn btn-primary btn-xs">Editar</a>
-                                        <a ng-href="#/clientes/{{ client.id }}/remover" class="btn btn-danger btn-xs">Excluir</a>
+                                        <a ng-href="#/clients/{{ client.id }}/edit" class="btn btn-primary btn-xs">Editar</a>
+                                        <a ng-href="#/clients/{{ client.id }}/remove" class="btn btn-danger btn-xs">Excluir</a>
                                     </td>
                                 </tr>
                             </tbody>

@@ -53,7 +53,7 @@ class ProjectController extends Controller
         }
 
         try {
-            return $this->repository->find($id);
+            return $this->repository->skipPresenter()->find($id);
         } catch( \Exception $e ) {
             return [
                 'error' => true,

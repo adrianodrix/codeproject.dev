@@ -7,7 +7,7 @@ angular.module('codeProject.controllers')
                 if ($scope.form.$valid) {
                     $scope.client.$save()
                         .then(function () {
-                            $location.path('/clientes');
+                            $location.path('/clients');
                         });
                 };
             };

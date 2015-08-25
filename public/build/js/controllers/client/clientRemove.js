@@ -6,7 +6,7 @@ angular.module('codeProject.controllers')
             $scope.remove = function(){
                 $scope.client.$delete()
                     .then(function(){
-                        $location.path('/clientes');
+                        $location.path('/clients');
                     });
             };
         }]);

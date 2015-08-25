@@ -6,7 +6,7 @@ angular.module('codeProject.controllers')
             $scope.save = function(){
                 if ($scope.form.$valid) {
                     Client.update({id: $scope.client.id}, $scope.client, function(){
-                        $location.path('/clientes');
+                        $location.path('/clients');
                     });
                 };
             };
