@@ -14,22 +14,33 @@ class ProjectTransformer extends TransformerAbstract
     /**
      * @var array
      */
-    protected $defaultIncludes = ['members'];
+    protected $defaultIncludes = ['client', 'members'];
 
     /**
      * @param Project $model
      * @return array
      */
     public function transform(Project $model) {
+
         return [
-            'project_id'    => (int) $model->id,
-            'client'        => (int) $model->client_id,
+            'id'    => (int) $model->id,
+            'client_id'        => (int) $model->client_id,
+            'owner_id'        => (int) $model->owner_id,
             'name'          => $model->name,
             'description'   => $model->description,
             'progress'      => (int) $model->progress,
-            'status'        => (int) $model->status,
+            'status'        => (int)$model->status,
             'due_date'      => $model->due_date
         ];
+    }
+
+    /**
+     * @param Project $project
+     * @return mixed
+     */
+    public function includeClient(Project $project)
+    {
+        return $this->item($project->client, new ClientTransformer());
     }
 
     /**
@@ -40,4 +51,6 @@ class ProjectTransformer extends TransformerAbstract
     {
         return $this->collection($project->members, new ProjectMemberTransformer());
     }
+
+
 }

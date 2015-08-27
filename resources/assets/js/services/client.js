@@ -4,6 +4,6 @@ angular.module('codeProject.services')
         return $resource(codeProjectConfig.baseUrl + '/client/:id', {id: '@id'},{
             update: {
                 method: 'PUT'
-            }
+            },
         });
     }]);

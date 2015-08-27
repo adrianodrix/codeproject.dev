@@ -38,7 +38,7 @@ class ProjectNoteController extends Controller
             return ['error' => 'Access forbidden'];
         }
 
-        return  $this->repository->skipPresenter()->findWhere(['project_id' => $projectId]);
+        return  $this->repository->findWhere(['project_id' => $projectId]);
     }
 
     /**
@@ -67,8 +67,13 @@ class ProjectNoteController extends Controller
         }
 
         try {
-            //return $this->repository->skipPresenter()->findWhere(['project_id' => $projectId, 'id' => $noteId]);
-            return $this->repository->skipPresenter()->find($noteId);
+            $result = $this->repository->findWhere(['project_id' => $projectId, 'id' => $noteId]);
+            if (isset($result['data']) && count($result['data']) == 1){
+                $result = [
+                    'data' => $result['data'][0]
+                ];
+            }
+            return $result;
         } catch( ModelNotFoundException $e ) {
             return [
                 'error' => true,

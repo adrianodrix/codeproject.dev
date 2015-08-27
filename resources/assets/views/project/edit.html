@@ -1,0 +1,85 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ title }}</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" name="form" method="POST" ng-submit="save()">
+
+                        <div class="form-group" ng-class="{'has-error': !form.client.$valid && form.client.$touched}">
+                            <label class="col-md-4 control-label">Cliente</label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="client" ng-model="project.client_id"
+                                    ng-options="client.id as client.name for client in clients" required>
+                                </select>
+                                <div class="help-block" ng-messages="form.client.$error" ng-show="form.client.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.name.$valid && form.name.$touched}">
+                            <label class="col-md-4 control-label">Nome</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="name" ng-model="project.name" required>
+                                <div class="help-block" ng-messages="form.name.$error" ng-show="form.name.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.description.$valid && form.description.$touched}">
+                            <label class="col-md-4 control-label">Descrição</label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="description" ng-model="project.description" required></textarea>
+                                <div class="help-block" ng-messages="form.description.$error" ng-show="form.description.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.due_date.$valid && form.due_date.$touched}">
+                            <label class="col-md-4 control-label">Previsão</label>
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="due_date" ng-model="project.due_date" required>
+                                <div class="help-block" ng-messages="form.due_date.$error" ng-show="form.due_date.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.progress.$valid && form.progress.$touched}">
+                            <label class="col-md-4 control-label">Progresso</label>
+                            <div class="col-md-6">
+                                <input class="form-control" type="number" name="progress" ng-model="project.progress" required>
+                                <div class="help-block" ng-messages="form.progress.$error" ng-show="form.progress.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                    <div ng-message="number">Informar somente números!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-class="{'has-error': !form.status.$valid && form.status.$touched}">
+                            <label for="status" class="col-md-4 control-label">Status</label>
+                            <div class="col-md-6">
+                                <select class="form-control" name="status" ng-model="project.status"
+                                        ng-options="status.value as status.description for status in statusList" required>
+                                </select>
+                                <div class="help-block" ng-messages="form.status.$error" ng-show="form.status.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                                <a ng-href="#/projects" class="btn btn-success">Cancelar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('codeProject.controllers')
-    .controller('LoginController', ['$scope', '$location', 'OAuth',
-        function($scope, $location, OAuth){
+    .controller('LoginController', ['$scope', '$location', '$cookies', 'OAuth', 'User',
+        function($scope, $location, $cookies, OAuth, User){
             $scope.user = {
                 username: '',
                 password: ''
@@ -15,10 +15,11 @@ angular.module('codeProject.controllers')
 
             $scope.login = function(){
                 if ($scope.form.$valid){
-                    OAuth.getAccessToken($scope.user)
-                        .then(
-                        function(){
-                            $location.path('home');
+                    OAuth.getAccessToken($scope.user).then(function(){
+                            User.authenticated({}, {}, function(data){
+                                $cookies.putObject('user', data);
+                                $location.path('home');
+                            });
                         },
                         function(data){
                             $scope.error.error = true;

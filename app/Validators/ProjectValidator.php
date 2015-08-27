@@ -12,6 +12,6 @@ class ProjectValidator extends LaravelValidator
         'name'      => 'required|max:255',
         'progress'  => 'required|integer|between:0,100',
         'status'    => 'required|integer|between:0,2',
-        'due_date'  => 'required|date|after:now',
+        'due_date'  => 'required|date',
     ];
 }

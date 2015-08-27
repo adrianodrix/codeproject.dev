@@ -25,8 +25,21 @@ angular.module('codeProject')
 });
 
 angular.module('codeProject')
-    .config(['$routeProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
-        function($routeProvider, OAuthProvider, OAuthTokenProvider, codeProjectConfigProvider){
+    .config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
+        function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, codeProjectConfigProvider){
+            $httpProvider.defaults.transformResponse = function(data, headers){
+                var headersGetter = headers();
+                if(headersGetter['content-type'] == 'application/json' ||
+                    headersGetter['content-type'] == 'text/json'){
+                    var dataJson = JSON.parse(data);
+                    if(dataJson.hasOwnProperty('data')){
+                        dataJson = dataJson.data;
+                    }
+                    return dataJson;
+                }
+                return data;
+            };
+
             $routeProvider
                 .when('/login', {
                     templateUrl: 'build/html/login.html',
@@ -36,8 +49,9 @@ angular.module('codeProject')
                     templateUrl: 'build/html/home.html',
                     controller: 'HomeController',
                 })
+                //Clients ---------------------------------------
                 .when('/clients',{
-                    templateUrl: 'build/html/client/list.html',
+                    templateUrl: 'build/html/client/index.html',
                     controller: 'ClientListController',
                 })
                 .when('/clients/new',{
@@ -52,8 +66,30 @@ angular.module('codeProject')
                     templateUrl: 'build/html/client/remove.html',
                     controller: 'ClientRemoveController',
                 })
+                //Projects ----------------------------------------------
+                .when('/projects',{
+                    templateUrl: 'build/html/project/index.html',
+                    controller: 'ProjectListController',
+                })
+                .when('/projects/new',{
+                    templateUrl: 'build/html/project/edit.html',
+                    controller: 'ProjectNewController',
+                })
+                .when('/projects/:id',{
+                    templateUrl: 'build/html/project/show.html',
+                    controller: 'ProjectShowController',
+                })
+                .when('/projects/:id/edit',{
+                    templateUrl: 'build/html/project/edit.html',
+                    controller: 'ProjectEditController',
+                })
+                .when('/projects/:id/remove',{
+                    templateUrl: 'build/html/project/remove.html',
+                    controller: 'ProjectRemoveController',
+                })
+                //Notes ------------------------------------------------
                 .when('/project/:id/notes',{
-                    templateUrl: 'build/html/project/note/list.html',
+                    templateUrl: 'build/html/project/note/index.html',
                     controller: 'ProjectNoteListController',
                 })
                 .when('/project/:id/notes/:noteId',{

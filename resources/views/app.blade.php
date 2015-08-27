@@ -7,15 +7,13 @@
     <title>Laravel</title>
 
     @if(Config::get('app.debug'))
-        <link rel="stylesheet" href="{{ asset('build/css/vendor/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/css/vendor/bootstrap-theme.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/components.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/flaticon.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/font-awesome.css') }}">
     @else
         <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
     @endif
-
-    <!-- Fonts
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,8 +38,8 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">Home</a></li>
+                <li><a href="#/projects">Projects</a></li>
                 <li><a href="#/clients">Clients</a></li>
-                <li><a href="#/project/1/notes">Notes</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -77,18 +75,25 @@
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/homeController.js') }}"></script>
 
-    <script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
-    <script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
-    <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
-    <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/client/index.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/client/new.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/client/edit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/client/remove.js') }}"></script>
 
-    <script src="{{ asset('build/js/controllers/project/note/list.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/index.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/new.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/show.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/edit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/remove.js') }}"></script>
+
+    <script src="{{ asset('build/js/controllers/project/note/index.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/show.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/new.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/edit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/remove.js') }}"></script>
 
     <!-- SERVICES -->
+    <script src="{{ asset('build/js/services/user.js') }}"></script>
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/project.js') }}"></script>
     <script src="{{ asset('build/js/services/projectNote.js') }}"></script>

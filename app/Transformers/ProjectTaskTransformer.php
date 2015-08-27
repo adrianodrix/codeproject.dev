@@ -20,8 +20,8 @@ class ProjectTaskTransformer extends TransformerAbstract
      */
     public function transform(ProjectTask $model) {
         return [
-            'project_task_id'   => (int)$model->id,
-            'project'           => (int)$model->project_id,
+            'id'   => (int)$model->id,
+            'project_id'           => (int)$model->project_id,
             'name'              => $model->name,
             'start_date'        => $model->start_date,
             'due_date'          => $model->due_date,
