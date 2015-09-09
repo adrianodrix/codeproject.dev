@@ -2,18 +2,41 @@
 
 angular.module('codeProject.controllers', ['ngMessages', 'angular-oauth2']);
 angular.module('codeProject.services', ['ngResource']);
+angular.module('codeProject.filters', []);
 
 angular.module('codeProject', [
     'ngRoute',
     'angular-oauth2',
     'codeProject.controllers',
-    'codeProject.services'
+    'codeProject.services',
+    'codeProject.filters',
 ]);
 
 angular.module('codeProject')
     .provider('codeProjectConfig', function(){
         var config = {
             baseUrl: 'http://codeproject.dev',
+            project: {
+                status: [
+                    {'value': 0, 'label': 'Pendente'},
+                    {'value': 1, 'label': 'Em Andamento'},
+                    {'value': 2, 'label': 'Concluido'},
+                ],
+            },
+            utils: {
+                transformReponse: function(data, headers){
+                    var headersGetter = headers();
+                    if(headersGetter['content-type'] == 'application/json' ||
+                        headersGetter['content-type'] == 'text/json'){
+                        var dataJson = JSON.parse(data);
+                        if(dataJson.hasOwnProperty('data')){
+                            dataJson = dataJson.data;
+                        }
+                        return dataJson;
+                    }
+                    return data;
+                }
+            },
         };
 
         return {
@@ -27,18 +50,7 @@ angular.module('codeProject')
 angular.module('codeProject')
     .config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
         function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, codeProjectConfigProvider){
-            $httpProvider.defaults.transformResponse = function(data, headers){
-                var headersGetter = headers();
-                if(headersGetter['content-type'] == 'application/json' ||
-                    headersGetter['content-type'] == 'text/json'){
-                    var dataJson = JSON.parse(data);
-                    if(dataJson.hasOwnProperty('data')){
-                        dataJson = dataJson.data;
-                    }
-                    return dataJson;
-                }
-                return data;
-            };
+            $httpProvider.defaults.transformResponse = codeProjectConfigProvider.config.utils.transformReponse;
 
             $routeProvider
                 .when('/login', {
@@ -144,3 +156,17 @@ angular.module('codeProject')
             return $window.location.href = '#/login?error_reason=' + rejection.data.error;
         });
     }]);
+
+angular.module('codeProject')
+    .directive('formatDate', function(){
+        return {
+            require: 'ngModel',
+            link: function(scope, elem, attr, modelCtrl) {
+                modelCtrl.$formatters.push(function(modelValue){
+                    var temp = new Date(modelValue)
+                    temp.setDate(temp.getDate()+1);
+                    return temp;
+                })
+            }
+        }
+    });

@@ -1,15 +1,12 @@
 angular.module('codeProject.controllers')
-    .controller('ProjectNewController', ['$scope', '$location', 'Client', 'Project',
-        function($scope, $location, Client, Project){
+    .controller('ProjectNewController', ['$scope', '$location', 'Client', 'Project', 'codeProjectConfig',
+        function($scope, $location, Client, Project, codeProjectConfig){
             $scope.title   = 'Novo Projeto';
 
             $scope.project = new Project();
             $scope.clients = Client.query();
-            $scope.statusList  = [
-                {'value': 0, 'description': 'Pendente'},
-                {'value': 1, 'description': 'Em Andamento'},
-                {'value': 2, 'description': 'Concluido'},
-            ];
+
+            $scope.statusList  = codeProjectConfig.project.status;
 
             $scope.save = function(){
                 if ($scope.form.$valid) {

@@ -56,6 +56,7 @@
 
 <!-- Scripts -->
 @if(Config::get('app.debug'))
+    <!-- VENDORS -->
     <script src="{{ asset('build/js/vendor/jquery.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular.min.js') }}"></script>
@@ -69,7 +70,11 @@
     <script src="{{ asset('build/js/vendor/query-string.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}"></script>
 
+    <!-- APP AND CONFIGS -->
     <script src="{{ asset('build/js/app.js') }}"></script>
+
+    <!-- FILTERS -->
+    <script src="{{ asset('build/js/filters/date-br.js') }}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
@@ -97,6 +102,7 @@
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/project.js') }}"></script>
     <script src="{{ asset('build/js/services/projectNote.js') }}"></script>
+
 
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
