@@ -2,9 +2,8 @@ angular.module('codeProject.controllers')
     .controller('ProjectNewController', ['$scope', '$location', 'Client', 'Project', 'codeProjectConfig',
         function($scope, $location, Client, Project, codeProjectConfig){
             $scope.title   = 'Novo Projeto';
-
             $scope.project = new Project();
-            $scope.clients = Client.query();
+
 
             $scope.statusList  = codeProjectConfig.project.status;
 
@@ -15,6 +14,24 @@ angular.module('codeProject.controllers')
                             $location.path('/projects');
                         });
                 };
+            };
+
+            $scope.formatName = function(model){
+                if (model){
+                    return model.name;
+                }
+                return '';
+            };
+
+            $scope.getClients = function (name){
+                return Client.query({
+                    search: name,
+                    searchFields: 'name:like',
+                }).$promise;
+            };
+
+            $scope.selectClient = function(client){
+                $scope.project.client_id = client.id;
             };
 
         }]);

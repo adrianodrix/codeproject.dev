@@ -14,6 +14,13 @@ use CodeProject\Entities\Client;
 class ClientRepositoryEloquent extends BaseRepository implements ClientRepository
 {
     /**
+     * @var array
+     */
+    protected $fieldSearchable = [
+        'name' =>'like',
+    ];
+
+    /**
      * Specify Model class name
      *
      * @return string

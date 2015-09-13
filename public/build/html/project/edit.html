@@ -9,12 +9,20 @@
                         <div class="form-group" ng-class="{'has-error': !form.client.$valid && form.client.$touched}">
                             <label class="col-md-4 control-label">Cliente</label>
                             <div class="col-md-6">
-                                <select class="form-control" name="client" ng-model="project.client_id"
-                                    ng-options="client.id as client.name for client in clients" required>
-                                    <option value="">Selecione o cliente</option>
-                                </select>
+                                <input type="text" class="form-control" name="client" ng-model="client"
+                                       typeahead="client as client.name for client in getClients($viewValue)|limitTo:10"
+                                       typeahead-input-formatter="formatName($model)"
+                                       typeahead-on-select="selectClient($item)"
+                                       typeahead-editable="false"
+                                       typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+                                        required />
+                                <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicons-erase    "></i> No Results Found
+                                </div>
                                 <div class="help-block" ng-messages="form.client.$error" ng-show="form.client.$touched">
                                     <div ng-message="required">Campo obrigatório!</div>
+                                    <div ng-message="editable">Cliente inválido!</div>
                                 </div>
                             </div>
                         </div>

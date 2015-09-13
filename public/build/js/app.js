@@ -7,6 +7,9 @@ angular.module('codeProject.filters', []);
 angular.module('codeProject', [
     'ngRoute',
     'angular-oauth2',
+    'ui.bootstrap.typeahead',
+    'ui.bootstrap.progressbar',
+    'ui.bootstrap.tpls',
     'codeProject.controllers',
     'codeProject.services',
     'codeProject.filters',
