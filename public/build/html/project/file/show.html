@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Nota do Project: {{ project.name }}</div>
+                <div class="panel-body">
+                    <h3>{{ note.title }}</h3>
+                    <p>{{ note.note }}</p>
+                    <div>
+                        <a ng-href="#/project/{{ project.id }}/notes/{{ note.id }}/edit" class="btn btn-primary btn-xs">Editar</a>
+                        <a ng-href="#/project/{{ project.id }}/notes/{{ note.id }}/remove" class="btn btn-danger btn-xs">Excluir</a>
+                        <a ng-href="#/project/{{ project.id }}/notes" class="btn btn-success btn-xs">Voltar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

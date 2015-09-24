@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Exclusão de Nota</div>
+                <div class="panel-body">
+                    <h3>Projeto: {{ project.name }}</h3>
+                    <h4>Nota: {{ note.title }}</h4>
+                    <p>{{ note.note }}</p>
+                    <p>Realmente deseja excluir esta Nota?</p>
+                    <a href="" ng-click="remove()" class="btn btn-danger">Excluir</a>
+                    <a ng-href="#/project/{{ note.project_id }}/notes" class="btn btn-success">Cancelar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,15 @@ angular.module('codeProject.controllers')
         function($scope, $location, $routeParams, Project, Client, codeProjectConfig){
             $scope.title   = 'Edição do Projeto';
             $scope.statusList  = codeProjectConfig.project.status;
+            $scope.due_date = {
+                status: {
+                    opened: false,
+                },
+            };
+
+            $scope.open = function($event) {
+                $scope.due_date.status.opened = true;
+            };
 
             Project.get({id: $routeParams.id}, function(data){
                 $scope.project = data;

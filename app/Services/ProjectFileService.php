@@ -28,11 +28,6 @@ class ProjectFileService
      * @var Storage
      */
     private $storage;
-
-    /**
-     * @var array
-     */
-    private $extensions = array('jpg', 'jpeg', 'bmp', 'png', 'gif');
     /**
      * @var int
      */
@@ -69,27 +64,17 @@ class ProjectFileService
             $this->validator->with($data)->passesOrFail();
 
             if ($data['size'] > $this->sizeMax){
-                return [
-                    'error' => true,
-                    'message' => 'O arquivo enviado é muito grande, envie arquivos de até 2MB.',
-                ];
-            }
-
-            if (array_search($data['extension'], $this->extensions) === false) {
-                return [
-                    'error' => true,
-                    'message' => 'O arquivo não é do tipo válido.',
-                ];
+                throw new ValidatorException('O arquivo enviado é muito grande, envie arquivos de até 2MB.');
             }
 
             $projectFile = $this->repository->skipPresenter()->create($data);
 
             $this->storage->put(
-                $projectFile->id .'.'. $projectFile->extension,
+                $projectFile->getFileName(),
                 $this->fileSystem->get($file)
             );
 
-            return $projectFile;
+            return $this->repository->find($projectFile->id);
         } catch (ValidatorException $e) {
             return [
                 'error' => true,
@@ -132,7 +117,7 @@ class ProjectFileService
     {
         try {
             $file     = $this->repository->skipPresenter()->find($fileId);
-            $fileName = $file->id .'.'. $file->extension;
+            $fileName = $this->getFileName();
 
             if ($this->storage->exists($fileName)){
                 $this->storage->delete($fileName);
@@ -146,6 +131,30 @@ class ProjectFileService
         } catch (\Exception $e) {
             return ["error" => true,
                 "message" => $e->getMessage()];
+        }
+    }
+
+
+    /**
+     * @param $fileId
+     * @return string
+     */
+    public function getFilePath($fileId)
+    {
+        $file     = $this->repository->skipPresenter()->find($fileId);
+        return $this->getBaseUrl($file);
+    }
+
+    /**
+     * @param $projectFile
+     * @return string
+     */
+    private function getBaseUrl($projectFile)
+    {
+        switch ($this->storage->getDefaultDriver()){
+            case 'local':
+                return $this->storage->getDriver()->getAdapter()->getPathPrefix()
+                    .'/'. $projectFile->getFileName();
         }
     }
 }

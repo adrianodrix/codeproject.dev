@@ -12,5 +12,6 @@ class ProjectFileValidator extends LaravelValidator
         'description'   => 'required',
         'extension'     => 'required|max:4',
         'size'          => 'required|integer',
+        'file'          => 'required|mimes:jpeg,jpg,png,gif,pdf,txt',
     ];
 }

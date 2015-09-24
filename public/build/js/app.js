@@ -2,7 +2,9 @@
 
 angular.module('codeProject.controllers', ['ngMessages', 'angular-oauth2']);
 angular.module('codeProject.services', ['ngResource']);
+angular.module('codeProject.directives', []);
 angular.module('codeProject.filters', []);
+
 
 angular.module('codeProject', [
     'ngRoute',
@@ -10,8 +12,11 @@ angular.module('codeProject', [
     'ui.bootstrap.typeahead',
     'ui.bootstrap.progressbar',
     'ui.bootstrap.tpls',
+    'ui.bootstrap.datepicker',
+    'ngFileUpload',
     'codeProject.controllers',
     'codeProject.services',
+    'codeProject.directives',
     'codeProject.filters',
 ]);
 
@@ -25,6 +30,9 @@ angular.module('codeProject')
                     {'value': 1, 'label': 'Em Andamento'},
                     {'value': 2, 'label': 'Concluido'},
                 ],
+            },
+            urls: {
+                projectFile : '/project/{{id}}/file/{{fileId}}',
             },
             utils: {
                 transformReponse: function(data, headers){
@@ -122,6 +130,27 @@ angular.module('codeProject')
                 .when('/project/:id/notes/:noteId/remove',{
                     templateUrl: 'build/html/project/note/remove.html',
                     controller: 'ProjectNoteRemoveController',
+                })
+                //Files ------------------------------------------------
+                .when('/project/:id/files',{
+                    templateUrl: 'build/html/project/file/index.html',
+                    controller: 'ProjectFileListController',
+                })
+                .when('/project/:id/files/:fileId',{
+                    templateUrl: 'build/html/project/file/show.html',
+                    controller: 'ProjectFileShowController',
+                })
+                .when('/project/:id/files/:fileId/new',{
+                    templateUrl: 'build/html/project/file/new.html',
+                    controller: 'ProjectFileNewController',
+                })
+                .when('/project/:id/files/:fileId/edit',{
+                    templateUrl: 'build/html/project/file/edit.html',
+                    controller: 'ProjectFileEditController',
+                })
+                .when('/project/:id/files/:fileId/remove',{
+                    templateUrl: 'build/html/project/file/remove.html',
+                    controller: 'ProjectFileRemoveController',
                 })
                 .otherwise({
                     redirectTo: '/login',

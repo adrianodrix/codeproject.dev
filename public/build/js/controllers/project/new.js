@@ -3,7 +3,15 @@ angular.module('codeProject.controllers')
         function($scope, $location, Client, Project, codeProjectConfig){
             $scope.title   = 'Novo Projeto';
             $scope.project = new Project();
+            $scope.due_date = {
+                status: {
+                    opened: false,
+                },
+            };
 
+            $scope.open = function($event) {
+                $scope.due_date.status.opened = true;
+            };
 
             $scope.statusList  = codeProjectConfig.project.status;
 

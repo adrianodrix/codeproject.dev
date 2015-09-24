@@ -44,7 +44,7 @@ class ProjectFileController extends Controller
     public function store(Request $request, $projectId)
     {
         if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
+            return ['error' => 'Access forbidden: '. $projectId];
         }
 
         $file = $request->file('file');
@@ -67,7 +67,21 @@ class ProjectFileController extends Controller
         }
 
         try {
-            return $this->repository->findWhere(['project_id' => $projectId, 'id' => $fileId]);
+            $filePath = $this->service->getFilePath($fileId);
+            $fileContent = file_get_contents($filePath);
+            $file64 = base64_encode($fileContent);
+            $fileBd = $this->repository->skipPresenter()->find($fileId);
+
+            return [
+                'data' => [
+                    'file' => $file64,
+                    'size' => filesize($filePath),
+                    'fileName' => $fileBd->getFileName(),
+                    'name' => $fileBd->name,
+                    'description' => $fileBd->description,
+                    'extension' => $fileBd->extension,
+                ]
+            ];
         } catch( ModelNotFoundException $e ) {
             return [
                 'error' => true,

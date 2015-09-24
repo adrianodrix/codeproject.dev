@@ -52,6 +52,8 @@ abstract class Controller extends BaseController
     }
 
     /**
+     * Check permissions member ou owner this project id
+     *
      * @param $project_id
      * @return bool
      */
