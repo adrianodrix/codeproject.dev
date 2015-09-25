@@ -39,10 +39,6 @@ class ProjectMemberController extends Controller
      */
     public function store(Request $request, $projectId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->create($request->all(), $projectId);
     }
 
@@ -53,10 +49,6 @@ class ProjectMemberController extends Controller
      */
     public function show($projectId, $memberId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->repository
             ->with('member')
             ->findWhere([
@@ -72,10 +64,6 @@ class ProjectMemberController extends Controller
      */
     public function destroy($projectId, $memberId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->destroy($projectId, $memberId);
     }
 
@@ -87,7 +75,6 @@ class ProjectMemberController extends Controller
     public function isMember($projectId, $memberId)
     {
         $isMember = $this->repository->isMember($projectId, $memberId);
-
         return ['is_member' => $isMember];
     }
 }

@@ -53,14 +53,38 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
     }
 
     /**
-     * @param $project_id
-     * @param $member_id
-     * @return Boolean
+     * @param $projectId
+     * @param $memberId
+     * @return bool
      */
     public function isMember($projectId, $memberId)
     {
-        return (boolean) Project::whereHas('members', function($query) use ($memberId, $projectId) {
-            $query->where('member_id', '=', $memberId)->where('project_id', '=', $projectId);
-        })->count();
+        $project = $this->skipPresenter()->find($projectId);
+        foreach($project->members as $member){
+            if ($member->id == $memberId){
+                return true;
+            }
+        }
+        return false;
+
+//        return (boolean) Project::whereHas('members', function($query) use ($memberId, $projectId) {
+//            $query->where('member_id', '=', $memberId)->where('project_id', '=', $projectId);
+//        })->count();
     }
+
+    /**
+     * @param $userId
+     * @return $this
+     */
+        public function findWithOwnerAndMember($userId)
+    {
+        return $this->scopeQuery(function($query) use ($userId){
+            return $query->select('projects.*')
+                ->leftJoin('project_members', 'project_members.project_id', '=', 'projects.id')
+                ->where('project_members.member_id','=', $userId)
+                ->union($this->model->query()->getQuery()
+                ->where('owner_id', '=', $userId));
+        })->all();
+    }
+
 }

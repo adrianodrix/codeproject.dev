@@ -45,10 +45,6 @@ class ProjectTaskController extends Controller
      */
     public function show($projectId, $taskId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         try {
             return $this->repository->findWhere(['project_id' => $projectId, 'id' => $taskId]);
         } catch( ModelNotFoundException $e ) {
@@ -71,10 +67,6 @@ class ProjectTaskController extends Controller
      */
     public function update(Request $request, $id, $taskId)
     {
-        if(!$this->checkProjectPermissions($id)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         try {
             return $this->service->update($request->all(), $id, $taskId);
         } catch (ModelNotFoundException $e) {
@@ -94,9 +86,6 @@ class ProjectTaskController extends Controller
      */
     public function destroy($projectId, $taskId)
     {
-        if(!$this->checkProjectOwner($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
         return $this->service->destroy($taskId);
     }
 }

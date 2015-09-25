@@ -17,6 +17,9 @@ class ProjectController extends Controller
     {
         $this->repository   = $repository;
         $this->service      = $service;
+
+        $this->middleware('check-project-owner', ['except' => ['index', 'store', 'show']]);
+        $this->middleware('check-project-permission', ['except' => ['index', 'store', 'update', 'destroy']]);
     }
 
     /**
@@ -26,7 +29,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return $this->repository->findWhere(['owner_id' => $this->getAuthorizerId()]);
+        return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId());
     }
 
     /**
@@ -48,10 +51,6 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        if(!$this->checkProjectPermissions($id)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         try {
             return $this->repository->find($id);
         } catch( \Exception $e ) {
@@ -72,10 +71,6 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!$this->checkProjectOwner($id)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->update($request->all(), $id);
     }
 
@@ -87,10 +82,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        if(!$this->checkProjectOwner($id)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->destroy($id);
     }
 

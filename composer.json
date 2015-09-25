@@ -11,7 +11,8 @@
         "league/fractal": "^0.12.0",
         "prettus/laravel-validation": "^1.1",
         "lucadegasperi/oauth2-server-laravel": "^5.0",
-        "caouecs/laravel4-lang": "~2.0"
+        "caouecs/laravel4-lang": "~2.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -34,10 +34,6 @@ class ProjectNoteController extends Controller
      */
     public function index($projectId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return  $this->repository->findWhere(['project_id' => $projectId]);
     }
 
@@ -48,10 +44,6 @@ class ProjectNoteController extends Controller
      */
     public function store(Request $request, $projectId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->create($request->all(), $projectId);
     }
 
@@ -62,11 +54,7 @@ class ProjectNoteController extends Controller
      */
     public function show($projectId, $noteId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
-        try {
+       try {
             $result = $this->repository->findWhere(['project_id' => $projectId, 'id' => $noteId]);
             if (isset($result['data']) && count($result['data']) == 1){
                 $result = [
@@ -93,10 +81,6 @@ class ProjectNoteController extends Controller
      */
     public function update(Request $request, $projectId, $noteId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->update($request->all(), $projectId, $noteId);
     }
 
@@ -107,10 +91,6 @@ class ProjectNoteController extends Controller
      */
     public function destroy($projectId, $noteId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->destroy($noteId);
     }
 }

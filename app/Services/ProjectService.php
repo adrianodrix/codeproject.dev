@@ -115,4 +115,46 @@ class ProjectService
     {
         return (boolean) $this->findWhere(['id' => $projectId, 'owner_id' => $ownerId])->count();
     }
+
+    /**
+     * @param $project_id
+     * @return array
+     */
+    public function checkProjectOwner($project_id)
+    {
+        $user_id = \Authorizer::getResourceOwnerId();
+        return $this->repository->isOwner($project_id, $user_id);
+    }
+
+    /**
+     * @param $project_id
+     * @return array
+     */
+    public function checkProjectMember($project_id)
+    {
+        $user_id = \Authorizer::getResourceOwnerId();
+        return $this->repository->isMember($project_id, $user_id);
+    }
+
+    /**
+     * Check permissions member ou owner this project id
+     *
+     * @param $project_id
+     * @return bool
+     */
+    public function checkProjectPermissions($project_id)
+    {
+        if($this->checkProjectOwner($project_id) || $this->checkProjectMember($project_id)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthorizerId()
+    {
+        return \Authorizer::getResourceOwnerId();
+    }
 } 

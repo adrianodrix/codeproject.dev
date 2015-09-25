@@ -28,9 +28,6 @@ class ProjectFileController extends Controller
      */
     public function index($projectId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
         return  $this->repository->findWhere(['project_id' => $projectId]);
     }
 
@@ -43,10 +40,6 @@ class ProjectFileController extends Controller
      */
     public function store(Request $request, $projectId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden: '. $projectId];
-        }
-
         $file = $request->file('file');
         if(!$file) {
             return ['error' => true, 'message' => 'You must send a file'];
@@ -62,10 +55,6 @@ class ProjectFileController extends Controller
      */
     public function show($projectId, $fileId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         try {
             return $this->repository->find($fileId);
         } catch( ModelNotFoundException $e ) {
@@ -87,10 +76,6 @@ class ProjectFileController extends Controller
      */
     public function download($projectId, $fileId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         try {
             $filePath = $this->service->getFilePath($fileId);
             $fileContent = file_get_contents($filePath);
@@ -127,11 +112,7 @@ class ProjectFileController extends Controller
      */
     public function update(Request $request, $projectId, $fileId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
-        return $this->service->update($request->all(), $projectId, $fileId);
+       return $this->service->update($request->all(), $projectId, $fileId);
     }
 
     /**
@@ -143,10 +124,6 @@ class ProjectFileController extends Controller
      */
     public function destroy($projectId, $fileId)
     {
-        if(!$this->checkProjectPermissions($projectId)) {
-            return ['error' => 'Access forbidden'];
-        }
-
         return $this->service->destroy($fileId);
     }
 }
