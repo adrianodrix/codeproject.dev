@@ -50,14 +50,12 @@
                         <div class="form-group" ng-class="{'has-error': !form.due_date.$valid && form.due_date.$touched}">
                             <label for="due_date" class="col-md-4 control-label">Previsão</label>
                             <div class="col-md-6">
-
                                 <p class="input-group">
                                     <input type="text" class="form-control" name="due_date" id="due_date"
                                            datepicker-popup="dd/MM/yyyy"
                                            ng-model="project.due_date"
                                            is-open="due_date.status.opened"
-                                           close-text="Fechar"
-                                           required/>
+                                           close-text="Fechar" />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
