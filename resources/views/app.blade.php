@@ -101,6 +101,12 @@
     <script src="{{ asset('build/js/controllers/project/note/edit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/remove.js') }}"></script>
 
+    <script src="{{ asset('build/js/controllers/project/task/index.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/show.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/new.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/edit.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/task/remove.js') }}"></script>
+
     <script src="{{ asset('build/js/controllers/project/file/index.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/file/show.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/file/new.js') }}"></script>
@@ -114,6 +120,7 @@
     <script src="{{ asset('build/js/services/project.js') }}"></script>
     <script src="{{ asset('build/js/services/projectNote.js') }}"></script>
     <script src="{{ asset('build/js/services/projectFile.js') }}"></script>
+    <script src="{{ asset('build/js/services/projectTask.js') }}"></script>
 
 @else
     <script src="{{ elixir('js/all.js') }}"></script>

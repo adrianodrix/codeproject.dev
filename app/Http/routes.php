@@ -20,18 +20,17 @@ Route::post('oauth/access_token', function() {
 });
 
 Route::group(['middleware' => 'oauth'], function() {
+    Route::resource('user',           'UserController',          ['except' => ['create', 'edit']]);
     Route::resource('client',         'ClientController',        ['except' => ['create', 'edit']]);
     Route::resource('project',        'ProjectController',       ['except' => ['create', 'edit']]);
-    Route::get('/user/authenticated', ['as' => 'project.user.authenticated', 'uses' => 'UserController@authenticated']);
+    Route::get('/user/authenticated', ['as' => 'user.authenticated', 'uses' => 'UserController@authenticated']);
 
     Route::group(['middleware' => 'check-project-permission'], function() {
         Route::resource('project.note',   'ProjectNoteController',   ['except' => ['create', 'edit']]);
         Route::resource('project.task',   'ProjectTaskController',   ['except' => ['create', 'edit']]);
         Route::resource('project.file',   'ProjectFileController',   ['except' => ['create', 'edit']]);
-        Route::resource('project.member', 'ProjectMemberController', ['except' => ['create', 'edit']]);
+        Route::resource('project.member', 'ProjectMemberController', ['except' => ['create', 'edit', 'update']]);
 
         Route::get('/project/{project}/file/{file}/download', ['as' => 'project.file.download', 'uses' => 'ProjectFileController@download']);
     });
-
-
 });

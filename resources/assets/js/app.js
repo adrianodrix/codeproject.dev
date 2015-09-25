@@ -31,10 +31,22 @@ angular.module('codeProject')
                     {'value': 2, 'label': 'Concluido'},
                 ],
             },
+            projectTask: {
+                status: [
+                    {'value': 0, 'label': 'Incompleto'},
+                    {'value': 1, 'label': 'Completo'},
+                ],
+            },
             urls: {
                 projectFile : '/project/{{id}}/file/{{fileId}}',
             },
             utils: {
+                transformRequest: function(data){
+                    if(angular.isObject(data)){
+                        return $httpParamSerializerProvider.$get()(data);
+                    }
+                    return data;
+                },
                 transformReponse: function(data, headers){
                     var headersGetter = headers();
                     if(headersGetter['content-type'] == 'application/json' ||
@@ -130,6 +142,27 @@ angular.module('codeProject')
                 .when('/project/:id/notes/:noteId/remove',{
                     templateUrl: 'build/html/project/note/remove.html',
                     controller: 'ProjectNoteRemoveController',
+                })
+                //Taks ------------------------------------------------
+                .when('/project/:id/tasks',{
+                    templateUrl: 'build/html/project/task/index.html',
+                    controller: 'ProjectTaskListController',
+                })
+                .when('/project/:id/tasks/:taskId',{
+                    templateUrl: 'build/html/project/task/show.html',
+                    controller: 'ProjectTaskShowController',
+                })
+                .when('/project/:id/tasks/:taskId/new',{
+                    templateUrl: 'build/html/project/task/new.html',
+                    controller: 'ProjectTaskNewController',
+                })
+                .when('/project/:id/tasks/:taskId/edit',{
+                    templateUrl: 'build/html/project/task/edit.html',
+                    controller: 'ProjectTaskEditController',
+                })
+                .when('/project/:id/tasks/:taskId/remove',{
+                    templateUrl: 'build/html/project/task/remove.html',
+                    controller: 'ProjectTaskRemoveController',
                 })
                 //Files ------------------------------------------------
                 .when('/project/:id/files',{

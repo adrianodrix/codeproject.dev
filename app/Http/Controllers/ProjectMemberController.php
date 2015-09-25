@@ -17,6 +17,9 @@ class ProjectMemberController extends Controller
     {
         $this->repository = $repository;
         $this->service = $service;
+
+        $this->middleware('check-project-owner', ['except' => ['index', 'show']]);
+        $this->middleware('check-project-permission', ['except' => ['store', 'destroy']]);
     }
 
     /**
@@ -54,7 +57,8 @@ class ProjectMemberController extends Controller
             ->findWhere([
                 'project_id' => $projectId,
                 'member_id' => $memberId
-            ]);
+            ])
+            ->first();
     }
 
     /**

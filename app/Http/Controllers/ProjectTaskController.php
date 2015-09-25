@@ -46,7 +46,7 @@ class ProjectTaskController extends Controller
     public function show($projectId, $taskId)
     {
         try {
-            return $this->repository->findWhere(['project_id' => $projectId, 'id' => $taskId]);
+            return $this->repository->find($taskId);
         } catch( ModelNotFoundException $e ) {
             return [
                 'error' => true,

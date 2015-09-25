@@ -66,10 +66,6 @@ class ProjectRepositoryEloquent extends BaseRepository implements ProjectReposit
             }
         }
         return false;
-
-//        return (boolean) Project::whereHas('members', function($query) use ($memberId, $projectId) {
-//            $query->where('member_id', '=', $memberId)->where('project_id', '=', $projectId);
-//        })->count();
     }
 
     /**
