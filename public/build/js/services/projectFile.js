@@ -7,7 +7,7 @@ angular.module('codeProject.services')
             },
             download: {
                 method: 'GET',
-                url: codeProjectConfig.baseUrl + Url.getUrlResource(codeProjectConfig.urls.projectFile),
+                url: codeProjectConfig.baseUrl + Url.getUrlResource(codeProjectConfig.urls.projectFile) + '/download',
             }
         });
     }]);

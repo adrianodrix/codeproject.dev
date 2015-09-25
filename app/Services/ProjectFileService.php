@@ -5,6 +5,7 @@ namespace CodeProject\Services;
 use \CodeProject\Repositories\ProjectFileRepository;
 use \CodeProject\Validators\ProjecNotetValidator;
 use CodeProject\Validators\ProjectFileValidator;
+use Prettus\Validator\Contracts\ValidatorInterface;
 use \Prettus\Validator\Exceptions\ValidatorException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
@@ -61,7 +62,7 @@ class ProjectFileService
             $data['extension']  = $file->getClientOriginalExtension();
             $data['size']       = $file->getClientSize();
 
-            $this->validator->with($data)->passesOrFail();
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
             if ($data['size'] > $this->sizeMax){
                 throw new ValidatorException('O arquivo enviado é muito grande, envie arquivos de até 2MB.');
@@ -96,7 +97,7 @@ class ProjectFileService
     {
         try {
             $data['project_id'] = $projectId;
-            $this->validator->with($data)->passesOrFail();
+            $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
             return $this->repository->update($data, $fileId);
         } catch (ValidatorException $e) {
             return [
@@ -117,7 +118,7 @@ class ProjectFileService
     {
         try {
             $file     = $this->repository->skipPresenter()->find($fileId);
-            $fileName = $this->getFileName();
+            $fileName = $file->getFileName();
 
             if ($this->storage->exists($fileName)){
                 $this->storage->delete($fileName);

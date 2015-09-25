@@ -27,5 +27,6 @@ Route::group(['middleware' => 'oauth'], function() {
     Route::resource('project.file',   'ProjectFileController',   ['except' => ['create', 'edit']]);
     Route::resource('project.member', 'ProjectMemberController', ['except' => ['create', 'edit']]);
 
-    Route::get('/user/authenticated', 'UserController@authenticated');
+    Route::get('/user/authenticated', ['as' => 'project.user.authenticated', 'uses' => 'UserController@authenticated']);
+    Route::get('/project/{project}/file/{file}/download', ['as' => 'project.file.download', 'uses' => 'ProjectFileController@download']);
 });

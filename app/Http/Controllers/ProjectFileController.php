@@ -67,6 +67,31 @@ class ProjectFileController extends Controller
         }
 
         try {
+            return $this->repository->find($fileId);
+        } catch( ModelNotFoundException $e ) {
+            return [
+                'error' => true,
+                'message' => 'Não foi possível encontrar o registro'
+            ];
+        } catch (\Exception $e) {
+            return ["error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    /**
+     * @param $projectId
+     * @param $fileId
+     * @return array|mixed
+     */
+    public function download($projectId, $fileId)
+    {
+        if(!$this->checkProjectPermissions($projectId)) {
+            return ['error' => 'Access forbidden'];
+        }
+
+        try {
             $filePath = $this->service->getFilePath($fileId);
             $fileContent = file_get_contents($filePath);
             $file64 = base64_encode($fileContent);

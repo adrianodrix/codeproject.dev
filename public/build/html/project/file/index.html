@@ -18,12 +18,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="file in files">
-                                    <td><a ng-href="#/project/{{ file.project_id }}/files/{{ file.id }}">{{ file.name }}</a></td>
+                                    <td>{{ file.name }}</td>
                                     <td>{{ file.description | limitTo: 50  }}...</td>
                                     <td>
-                                        <!--<a ng-href="#/project/{{ file.project_id }}/files/{{ file.id }}/download" target="_blank">
-                                            <i class="glyphicon glyphicon-floppy-save"></i>
-                                        </a>-->
                                         <project-file-download project-id="{{ file.project_id }}" file-id="{{ file.id }}"></project-file-download>
                                     </td>
                                     <td>

@@ -26,7 +26,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label class="col-md-4 control-label">Arquivo</label>
                             <div class="col-md-6">
@@ -34,7 +33,7 @@
                                      ngf-select
                                      ng-model="file.file"
                                      name="file">Selecionar</div>
-
+                                {{ file.file.name }}
                                 <div class="help-block" ng-messages="form.file.$error" ng-show="form.file.$touched">
                                     <div ng-message="required">Campo obrigatório!</div>
                                 </div>
