@@ -121,6 +121,7 @@
     <script src="{{ asset('build/js/services/projectNote.js') }}"></script>
     <script src="{{ asset('build/js/services/projectFile.js') }}"></script>
     <script src="{{ asset('build/js/services/projectTask.js') }}"></script>
+    <script src="{{ asset('build/js/services/projectMember.js') }}"></script>
 
 @else
     <script src="{{ elixir('js/all.js') }}"></script>

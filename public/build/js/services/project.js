@@ -6,7 +6,6 @@ angular.module('codeProject.services')
                 method: 'GET',
                 transformResponse: function(data, headers){
                     var o = codeProjectConfig.utils.transformReponse(data, headers);
-                    console.log(o);
                     if (o.hasOwnProperty('due_date') && o.due_date){
                         var arrayDate = o.due_date.split('-'),
                             month = parseInt(arrayDate[1] - 1);

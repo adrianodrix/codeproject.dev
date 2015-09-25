@@ -19,7 +19,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="project in projects">
-                                    <td><a ng-href="#/projects/{{ project.id }}">{{ project.name }}</a></td>
+                                    <td><a ng-href="#/projects/{{ project.id }}">{{ project.name }} <i class="glyphicon glyphicon-star-empty" ng-hide="project.is_member"></i></a></td>
                                     <td>{{ project.client.data.name }}</td>
                                     <td>
                                         <progressbar class="progress-striped active" max="100" value=" project.progress" type="info">{{ project.progress }}%</progressbar>

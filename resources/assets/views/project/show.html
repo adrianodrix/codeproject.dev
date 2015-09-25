@@ -13,17 +13,49 @@
                         <span class="label label-warning" ng-switch-when="1">Em andamento</span>
                         <span class="label label-success" ng-switch-when="2">Concluido</span>
                     </div>
+                    <hr/>
+                    <form class="form-inline" role="form" name="form" method="POST" ng-submit="save()">
+                        <div class="form-group" ng-class="{'has-error': !form.member.$valid && form.member.$touched}">
+                            <label class="col-md-4 control-label">Novo Membro</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="member" ng-model="member"
+                                       typeahead="user as user.name for user in getUsers($viewValue)|limitTo:10"
+                                       typeahead-input-formatter="formatName($model)"
+                                       typeahead-on-select="selectMember($item)"
+                                       typeahead-editable="false"
+                                       typeahead-loading="loadingLocations" typeahead-no-results="noResults"
+                                       required />
+                                <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                                <div ng-show="noResults">
+                                    <i class="glyphicon glyphicons-erase"></i> No Results Found
+                                </div>
+                                <div class="help-block" ng-messages="form.member.$error" ng-show="form.member.$touched">
+                                    <div ng-message="required">Campo obrigatório!</div>
+                                    <div ng-message="editable">Membro inválido!</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">Salvar</button>                                
+                            </div>
+                        </div>
+
+                    </form>
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Membro</th>
                                 <th>Email</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="member in project.members.data">
                                 <td>{{ member.name }}</td>
                                 <td>{{ member.email | lowercase }}</td>
+                                <td><a ng-href="" ng-click="remove(member)" class="btn btn-danger btn-xs">Excluir</a></td>
                             </tr>
                         </tbody>
                     </table>
