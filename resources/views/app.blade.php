@@ -115,6 +115,7 @@
 
     <!-- SERVICES -->
     <script src="{{ asset('build/js/services/url.js') }}"></script>
+    <script src="{{ asset('build/js/services/oAuthFixInterceptor.js') }}"></script>
     <script src="{{ asset('build/js/services/user.js') }}"></script>
     <script src="{{ asset('build/js/services/client.js') }}"></script>
     <script src="{{ asset('build/js/services/project.js') }}"></script>

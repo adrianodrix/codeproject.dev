@@ -73,7 +73,14 @@ angular.module('codeProject')
 angular.module('codeProject')
     .config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
         function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, codeProjectConfigProvider){
+
+            $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+            $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
+
             $httpProvider.defaults.transformResponse = codeProjectConfigProvider.config.utils.transformReponse;
+            $httpProvider.defaults.transformRequest = codeProjectConfigProvider.config.utils.transformRequest;
+
+            $httpProvider.interceptors.push('OAuthFixInterceptor');
 
             $routeProvider
                 .when('/login', {
@@ -192,9 +199,6 @@ angular.module('codeProject')
                 .when('/project/:id/files/:fileId/remove',{
                     templateUrl: 'build/html/project/file/remove.html',
                     controller: 'ProjectFileRemoveController',
-                })
-                .otherwise({
-                    redirectTo: '/login',
                 });
 
             OAuthProvider.configure({
@@ -213,7 +217,7 @@ angular.module('codeProject')
     }]);
 
 angular.module('codeProject')
-    .run(['$rootScope', '$location', '$window', 'OAuth', function($rootScope, $location, $window, OAuth) {
+    .run(['$rootScope', '$location', '$http', 'OAuth', function($rootScope, $location, $http, OAuth) {
         $rootScope.$on('$routeChangeStart', function(event, next, current){
             if(next.$$route.originalPath != '/login'){
                 if(!OAuth.isAuthenticated()){
@@ -222,19 +226,31 @@ angular.module('codeProject')
             }
         });
 
-        $rootScope.$on('oauth:error', function(event, rejection) {
+        $rootScope.$on('oauth:error', function(event, data) {
             // Ignore `invalid_grant` error - should be catched on `LoginController`.
-            if ('invalid_grant' === rejection.data.error) {
+            if ('invalid_grant' === data.rejection.data.error) {
                 return;
             }
 
-            // Refresh token when a `invalid_token` error occurs.
-            if ('invalid_token' === rejection.data.error) {
-                return OAuth.getRefreshToken();
+            // Refresh token when a `access_denied` error occurs.
+            if ('access_denied' === data.rejection.data.error) {
+                if(!$rootScope.isRefreshingToken) {
+                    $rootScope.isRefreshingToken = true;
+                    return OAuth.getRefreshToken().then(function (response) {
+                        $rootScope.isRefreshingToken = false;
+                        return $http(data.rejection.config).then(function (response) {
+                            return data.deferred.resolve(response);
+                        });
+                    });
+                } else {
+                    return $http(data.rejection.config).then(function (response) {
+                        return data.deferred.resolve(response);
+                    });
+                }
             }
 
             // Redirect to `/login` with the `error_reason`.
-            return $window.location.href = '#/login?error_reason=' + rejection.data.error;
+            return $location.path('login');
         });
     }]);
 

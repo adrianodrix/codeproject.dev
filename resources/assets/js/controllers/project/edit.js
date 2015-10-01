@@ -18,6 +18,16 @@ angular.module('codeProject.controllers')
                 $scope.client  = data.client.data;
             });
 
+            var getClient = function (i) {
+                Client.query({}, function(){
+                    console.log('sucess of the client: '.concat(i));
+                })
+            }
+
+            for (var i = 0; i < 10; i++) {
+                getClient(i);
+            }
+
             $scope.save = function(){
                 if ($scope.form.$valid) {
                     Project.update({id: $scope.project.id}, $scope.project, function(){
