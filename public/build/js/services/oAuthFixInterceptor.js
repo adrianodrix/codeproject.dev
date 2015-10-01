@@ -29,8 +29,9 @@ angular.module('codeProject.services')
                             rejection: rejection,
                             deferred: deferred,
                         });
+                        return deferred.promise;
                     }
-                    return deferred.promise;
+                    return $q.reject(rejection);
                 }
             };
     }]);

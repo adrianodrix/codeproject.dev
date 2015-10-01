@@ -13,7 +13,9 @@ angular.module('codeProject', [
     'ui.bootstrap.progressbar',
     'ui.bootstrap.tpls',
     'ui.bootstrap.datepicker',
+    'ui.bootstrap.modal',
     'ngFileUpload',
+    'http-auth-interceptor',
     'codeProject.controllers',
     'codeProject.services',
     'codeProject.directives',
@@ -21,7 +23,7 @@ angular.module('codeProject', [
 ]);
 
 angular.module('codeProject')
-    .provider('codeProjectConfig', function(){
+    .provider('codeProjectConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider){
         var config = {
             baseUrl: 'http://codeproject.dev',
             project: {
@@ -68,7 +70,7 @@ angular.module('codeProject')
                 return config;
             }
         }
-});
+}]);
 
 angular.module('codeProject')
     .config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
@@ -80,6 +82,8 @@ angular.module('codeProject')
             $httpProvider.defaults.transformResponse = codeProjectConfigProvider.config.utils.transformReponse;
             $httpProvider.defaults.transformRequest = codeProjectConfigProvider.config.utils.transformRequest;
 
+            $httpProvider.interceptors.splice(0,1);
+            $httpProvider.interceptors.splice(0,1);
             $httpProvider.interceptors.push('OAuthFixInterceptor');
 
             $routeProvider
@@ -217,12 +221,18 @@ angular.module('codeProject')
     }]);
 
 angular.module('codeProject')
-    .run(['$rootScope', '$location', '$http', 'OAuth', function($rootScope, $location, $http, OAuth) {
+    .run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth', function(
+        $rootScope, $location, $http, $modal, httpBuffer, OAuth) {
+
         $rootScope.$on('$routeChangeStart', function(event, next, current){
-            if(next.$$route.originalPath != '/login'){
-                if(!OAuth.isAuthenticated()){
-                    $location.path('login');
+            if (undefined != next){
+                if(next.$$route.originalPath != '/login'){
+                    if(!OAuth.isAuthenticated()){
+                        $location.path('login');
+                    }
                 }
+            } else {
+                $location.path('login');
             }
         });
 
@@ -234,6 +244,19 @@ angular.module('codeProject')
 
             // Refresh token when a `access_denied` error occurs.
             if ('access_denied' === data.rejection.data.error) {
+                httpBuffer.append(data.rejection.config, data.deferred);
+
+                if(!$rootScope.loginModalOpened){
+                    var modalInstance = $modal.open({
+                        templateUrl: 'build/html/templates/login-modal.html',
+                        controller: 'LoginModalController',
+                    });
+
+                    $rootScope.loginModalOpened = true;
+                }
+                return;
+
+                /*
                 if(!$rootScope.isRefreshingToken) {
                     $rootScope.isRefreshingToken = true;
                     return OAuth.getRefreshToken().then(function (response) {
@@ -247,6 +270,7 @@ angular.module('codeProject')
                         return data.deferred.resolve(response);
                     });
                 }
+                */
             }
 
             // Redirect to `/login` with the `error_reason`.

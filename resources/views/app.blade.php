@@ -45,6 +45,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <li><a href="#/login">Login</a></li>
+                <li><a href="#/logout">Logout</a></li>
                 <li><a href="{{ url('/auth/register') }}">Register</a></li>
 
             </ul>
@@ -70,6 +71,7 @@
     <script src="{{ asset('build/js/vendor/query-string.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/ng-file-upload.min.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/http-auth-interceptor.js') }}"></script>
 
     <!-- APP AND CONFIGS -->
     <script src="{{ asset('build/js/app.js') }}"></script>
@@ -79,9 +81,11 @@
 
     <!-- DIRECTIVES -->
     <script src="{{ asset('build/js/directives/projectFileDownload.js') }}"></script>
+    <script src="{{ asset('build/js/directives/loginForm.js') }}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/loginModalController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/homeController.js') }}"></script>
 
     <script src="{{ asset('build/js/controllers/client/index.js') }}"></script>
