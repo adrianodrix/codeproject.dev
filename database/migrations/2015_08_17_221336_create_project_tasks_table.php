@@ -17,8 +17,8 @@ class CreateProjectTasksTable extends Migration
             $table->unsignedInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('CASCADE')->onUpload('CASCADE');
             $table->string('name')->index();
-            $table->date('start_date');
-            $table->date('due_date');
+            $table->date('start_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->smallInteger('status')->unsigned()->default(0);
             $table->timestamps();
         });

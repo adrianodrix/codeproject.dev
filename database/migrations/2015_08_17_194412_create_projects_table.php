@@ -22,7 +22,7 @@ class CreateProjectsTable extends Migration
             $table->text('description')->nullable();
             $table->smallInteger('progress')->unsigned()->default(0);
             $table->smallInteger('status')->unsigned()->default(0);
-            $table->date('due_date');
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }
