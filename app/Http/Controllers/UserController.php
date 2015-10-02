@@ -32,8 +32,7 @@ class UserController extends Controller
      */
     public function authenticated()
     {
-        $userId = \Authorizer::getResourceOwnerId();
-        return $this->repository->find($userId);
+        return $this->repository->find(\Authorizer::getResourceOwnerId());
     }
 
     /**
@@ -43,7 +42,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return $this->repository->all();
+        return $this->authenticated();
     }
 
     /**
@@ -75,7 +74,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return $this->authenticated();
     }
 
     /**

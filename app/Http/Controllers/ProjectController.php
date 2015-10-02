@@ -27,9 +27,9 @@ class ProjectController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId());
+        return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId(), $request->query->get('limit'));
     }
 
     /**

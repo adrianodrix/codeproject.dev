@@ -14,13 +14,17 @@ angular.module('codeProject', [
     'ui.bootstrap.tpls',
     'ui.bootstrap.datepicker',
     'ui.bootstrap.modal',
+    'ui.bootstrap.dropdown',
     'ngFileUpload',
     'http-auth-interceptor',
+    'angularUtils.directives.dirPagination',
+    'mgcrea.ngStrap.navbar',
     'codeProject.controllers',
     'codeProject.services',
     'codeProject.directives',
     'codeProject.filters',
 ]);
+
 
 angular.module('codeProject')
     .provider('codeProjectConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider){
@@ -54,7 +58,7 @@ angular.module('codeProject')
                     if(headersGetter['content-type'] == 'application/json' ||
                         headersGetter['content-type'] == 'text/json'){
                         var dataJson = JSON.parse(data);
-                        if(dataJson.hasOwnProperty('data')){
+                        if(dataJson.hasOwnProperty('data')  && Object.keys(dataJson).length == 1){
                             dataJson = dataJson.data;
                         }
                         return dataJson;
@@ -73,7 +77,8 @@ angular.module('codeProject')
 }]);
 
 angular.module('codeProject')
-    .config(['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
+    .config(
+    ['$routeProvider', '$httpProvider', 'OAuthProvider', 'OAuthTokenProvider', 'codeProjectConfigProvider',
         function($routeProvider, $httpProvider, OAuthProvider, OAuthTokenProvider, codeProjectConfigProvider){
 
             $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -107,48 +112,69 @@ angular.module('codeProject')
                 .when('/clients',{
                     templateUrl: 'build/html/client/index.html',
                     controller: 'ClientListController',
+                    title: 'Clientes'
+                })
+                .when('/clients/dashboard',{
+                    templateUrl: 'build/html/client/dashboard.html',
+                    controller: 'ClientDashboardController',
+                    title: 'Clientes'
                 })
                 .when('/clients/new',{
                     templateUrl: 'build/html/client/new.html',
                     controller: 'ClientNewController',
+                    title: 'Novo Cliente',
                 })
                 .when('/clients/:id/edit',{
                     templateUrl: 'build/html/client/edit.html',
                     controller: 'ClientEditController',
+                    title: 'Alterar Cliente',
                 })
                 .when('/clients/:id/remove',{
                     templateUrl: 'build/html/client/remove.html',
                     controller: 'ClientRemoveController',
+                    title: 'Remover Cliente',
                 })
                 //Projects ----------------------------------------------
                 .when('/projects',{
                     templateUrl: 'build/html/project/index.html',
                     controller: 'ProjectListController',
+                    title: 'Projetos',
+                })
+                .when('/projects/dashboard',{
+                    templateUrl: 'build/html/project/dashboard.html',
+                    controller: 'ProjectDashboardController',
+                    title: 'Projetos',
                 })
                 .when('/projects/new',{
                     templateUrl: 'build/html/project/edit.html',
                     controller: 'ProjectNewController',
+                    title: 'Novo Projeto',
                 })
                 .when('/projects/:id',{
                     templateUrl: 'build/html/project/show.html',
                     controller: 'ProjectShowController',
+                    title: 'Projeto',
                 })
                 .when('/projects/:id/edit',{
                     templateUrl: 'build/html/project/edit.html',
                     controller: 'ProjectEditController',
+                    title: 'Editar Projeto',
                 })
                 .when('/projects/:id/remove',{
                     templateUrl: 'build/html/project/remove.html',
                     controller: 'ProjectRemoveController',
+                    title: 'Remover Projeto',
                 })
                 //Notes ------------------------------------------------
                 .when('/project/:id/notes',{
                     templateUrl: 'build/html/project/note/index.html',
                     controller: 'ProjectNoteListController',
+                    title: 'Notas do Projeto',
                 })
                 .when('/project/:id/notes/:noteId',{
                     templateUrl: 'build/html/project/note/show.html',
                     controller: 'ProjectNoteShowController',
+                    title: 'Nota',
                 })
                 .when('/project/:id/notes/:noteId/new',{
                     templateUrl: 'build/html/project/note/new.html',
@@ -166,6 +192,7 @@ angular.module('codeProject')
                 .when('/project/:id/tasks',{
                     templateUrl: 'build/html/project/task/index.html',
                     controller: 'ProjectTaskListController',
+                    title: 'Tarefas do Projeto',
                 })
                 .when('/project/:id/tasks/:taskId',{
                     templateUrl: 'build/html/project/task/show.html',
@@ -187,6 +214,7 @@ angular.module('codeProject')
                 .when('/project/:id/files',{
                     templateUrl: 'build/html/project/file/index.html',
                     controller: 'ProjectFileListController',
+                    title: 'Arquivos do Projeto',
                 })
                 .when('/project/:id/files/:fileId',{
                     templateUrl: 'build/html/project/file/show.html',
@@ -234,6 +262,10 @@ angular.module('codeProject')
             } else {
                 $location.path('login');
             }
+        });
+
+        $rootScope.$on('$routeChangeSuccess', function(event, current, previous){
+            $rootScope.pageTitle = current.$$route.title;
         });
 
         $rootScope.$on('oauth:error', function(event, data) {

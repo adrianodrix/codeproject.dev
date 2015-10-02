@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
+    <title>Code Project</title>
 
     @if(Config::get('app.debug'))
-        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/css/components.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/css/flaticon.css') }}">
         <link rel="stylesheet" href="{{ asset('build/css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/flaticon.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/components.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
     @else
         <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
     @endif
@@ -23,37 +23,19 @@
     <![endif]-->
 </head>
 <body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Laravel</a>
-        </div>
-
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li><a href="{{ url('/') }}">Home</a></li>
-                <li><a href="#/projects">Projects</a></li>
-                <li><a href="#/clients">Clients</a></li>
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-
-                <li><a href="#/login">Login</a></li>
-                <li><a href="#/logout">Logout</a></li>
-                <li><a href="{{ url('/auth/register') }}">Register</a></li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
+<load-template url="build/html/templates/menu.html"></load-template>
 
 <div ng-view></div>
+
+<footer class="footer-global">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center">&copy; Code Project - 2015 by <a href="mailto:adrianodrix@gmail.com">Adriano Santos</a></div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <!-- Scripts -->
 @if(Config::get('app.debug'))
@@ -72,6 +54,7 @@
     <script src="{{ asset('build/js/vendor/angular-oauth2.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/ng-file-upload.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/http-auth-interceptor.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/dirPagination.js') }}"></script>
 
     <!-- APP AND CONFIGS -->
     <script src="{{ asset('build/js/app.js') }}"></script>
@@ -82,22 +65,28 @@
     <!-- DIRECTIVES -->
     <script src="{{ asset('build/js/directives/projectFileDownload.js') }}"></script>
     <script src="{{ asset('build/js/directives/loginForm.js') }}"></script>
+    <script src="{{ asset('build/js/directives/loadTemplate.js') }}"></script>
+    <script src="{{ asset('build/js/directives/menuActivated.js') }}"></script>
+    <script src="{{ asset('build/js/directives/tabProject.js') }}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/loginModalController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/homeController.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/menuController.js') }}"></script>
 
     <script src="{{ asset('build/js/controllers/client/index.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/new.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/edit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/client/remove.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/client/dashboard.js') }}"></script>
 
     <script src="{{ asset('build/js/controllers/project/index.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/new.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/show.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/edit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/remove.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/dashboard.js') }}"></script>
 
     <script src="{{ asset('build/js/controllers/project/note/index.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/show.js') }}"></script>

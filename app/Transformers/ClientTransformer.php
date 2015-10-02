@@ -5,22 +5,14 @@ namespace CodeProject\Transformers;
 use League\Fractal\TransformerAbstract;
 use CodeProject\Entities\Client;
 
-/**
- * Class ClientTransformer
- * @package namespace CodeProject\Transformers;
- */
 class ClientTransformer extends TransformerAbstract
 {
 
-    /**
-     * Transform the \Client entity
-     * @param \Client $model
-     *
-     * @return array
-     */
+    protected $defaultIncludes = ['projects'];
+
     public function transform(Client $model) {
         return [
-            'id'     => (int) $model->id,
+            'id'            => (int) $model->id,
             'name'          => $model->name ,
             'responsible'   => $model->responsible,
             'email'         => $model->email,
@@ -29,4 +21,12 @@ class ClientTransformer extends TransformerAbstract
             'obs'           => $model->obs
         ];
     }
+
+    public function includeProjects(Client $client)
+    {
+        $transformer = new ProjectTransformer();
+        $transformer->setDefaultIncludes([]);
+        return $this->collection($client->projects, $transformer);
+    }
+
 }

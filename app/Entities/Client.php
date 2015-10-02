@@ -18,4 +18,9 @@ class Client extends Model implements Transformable
         'address',
         'obs',
     ];
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }
