@@ -231,6 +231,9 @@ angular.module('codeProject')
                 .when('/project/:id/files/:fileId/remove',{
                     templateUrl: 'build/html/project/file/remove.html',
                     controller: 'ProjectFileRemoveController',
+                })
+                .otherwise({
+                    redirectTo: '/login'
                 });
 
             OAuthProvider.configure({
