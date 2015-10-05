@@ -160,6 +160,11 @@ angular.module('codeProject')
                     controller: 'ProjectEditController',
                     title: 'Editar Projeto',
                 })
+                .when('/projects/:id/members',{
+                    templateUrl: 'build/html/project/members.html',
+                    controller: 'ProjectMembersController',
+                    title: 'Membros do Projeto',
+                })
                 .when('/projects/:id/remove',{
                     templateUrl: 'build/html/project/remove.html',
                     controller: 'ProjectRemoveController',

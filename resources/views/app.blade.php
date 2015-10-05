@@ -87,6 +87,7 @@
     <script src="{{ asset('build/js/controllers/project/edit.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/remove.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/dashboard.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/project/members.js') }}"></script>
 
     <script src="{{ asset('build/js/controllers/project/note/index.js') }}"></script>
     <script src="{{ asset('build/js/controllers/project/note/show.js') }}"></script>
