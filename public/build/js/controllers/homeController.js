@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('codeProject.controllers')
-    .controller('HomeController', ['$scope', '$cookies', 'Project',
-        function($scope, $cookies, Project){
+    .controller('HomeController', ['$scope', '$cookies', '$location', 'Project',
+        function($scope, $cookies, $location, Project){
             $scope.projects = [];
             Project.query({
                 orderBy: 'created_at',
@@ -10,4 +10,8 @@ angular.module('codeProject.controllers')
             }, function(result){
                $scope.projects = result.data;
             });
+
+            $scope.selectProject = function(project){
+                $location.path('/projects/'+ project.id);
+            }
     }]);

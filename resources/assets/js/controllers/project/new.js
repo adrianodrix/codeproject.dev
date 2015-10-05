@@ -32,9 +32,11 @@ angular.module('codeProject.controllers')
             };
 
             $scope.getClients = function (name){
-                return Client.query({
+                return Client.search({
                     search: name,
                     searchFields: 'name:like',
+                    limit: 10,
+                    paginate: false,
                 }).$promise;
             };
 

@@ -60,7 +60,9 @@
     <script src="{{ asset('build/js/app.js') }}"></script>
 
     <!-- FILTERS -->
+    <script src="{{ asset('build/js/filters/cut.js') }}"></script>
     <script src="{{ asset('build/js/filters/date-br.js') }}"></script>
+    <script src="{{ asset('build/js/filters/project-status.js') }}"></script>
 
     <!-- DIRECTIVES -->
     <script src="{{ asset('build/js/directives/projectFileDownload.js') }}"></script>
@@ -68,6 +70,7 @@
     <script src="{{ asset('build/js/directives/loadTemplate.js') }}"></script>
     <script src="{{ asset('build/js/directives/menuActivated.js') }}"></script>
     <script src="{{ asset('build/js/directives/tabProject.js') }}"></script>
+    <script src="{{ asset('build/js/directives/projectStatus.js') }}"></script>
 
     <!-- CONTROLLERS -->
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
@@ -117,7 +120,6 @@
     <script src="{{ asset('build/js/services/projectFile.js') }}"></script>
     <script src="{{ asset('build/js/services/projectTask.js') }}"></script>
     <script src="{{ asset('build/js/services/projectMember.js') }}"></script>
-
 @else
     <script src="{{ elixir('js/all.js') }}"></script>
 @endif

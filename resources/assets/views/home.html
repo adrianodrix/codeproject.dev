@@ -13,7 +13,9 @@
                             <div class="tools">
                                 <div>
                                     <label class="select-styled select-styled-default select-styled-sm">
-                                        <select ng-options="project.name for project in projects" ng-model="projectSelected">
+                                        <select ng-options="project.name for project in projects"
+                                                ng-model="projectSelected"
+                                                ng-change="selectProject(projectSelected)">
                                             <option value="">Todos</option>
                                         </select>
                                     </label>
@@ -37,9 +39,10 @@
 
                 <div class="row">
                     <div class="col-sm-4" ng-repeat="project in projects">
-                        <div class="panel panel-default panel-stacked">
+                        <a ng-href="#/projects/{{ project.id }}" style="text-decoration: none;">
+                            <div class="panel panel-default panel-stacked">
                             <div class="panel-heading bg-white no-border-bottom text-boulder">
-                                <h3 class="h4 text-boulder">{{ project.name }}</h3>
+                                <h3 class="h4 text-boulder">{{ project.name | cut:true:20 }}</h3>
                                 <small class="text-upper text-silver">{{ project.client.data.name }}</small>
                             </div> <!-- /panel-heading bg-white -->
                             <div class="panel-body">
@@ -71,10 +74,11 @@
                                 </ul> <!-- /panel-list-unstyled -->
                             </div> <!-- /panel-body -->
                             <div class="panel-footer panel-footer-xs no-border-top sazerac text-info font-bold">
-                                <i class="fa fa-circle"></i> {{ project.status_str }}
+                                <project-status value="{{ project.status }}"></project-status>
                                 <span class="pull-right">+{{ project.tasks_opened }}</span>
                             </div> <!-- /panel-footer panel-footer-xs sazerac -->
                         </div> <!-- /panel.panel-default -->
+                        </a>
                     </div>
 
                 </div>

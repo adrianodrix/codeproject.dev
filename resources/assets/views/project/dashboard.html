@@ -25,12 +25,7 @@
                                         <h4 class="h4 text-boulder">{{ project.name }}</h4>
                                         <small class="text-upper text-silver">{{ project.client.data.name }}</small>
                                     </header>
-                                    <div ng-switch on="project.status">
-                                        <p class="text-danger status" ng-switch-when="0"><i class="fa fa-circle" ></i> {{ project.status_str }}</p>
-                                        <p class="text-warning status" ng-switch-when="1"><i class="fa fa-circle"></i> {{ project.status_str }}</p>
-                                        <p class="text-success status" ng-switch-when="2"><i class="fa fa-circle"></i> {{ project.status_str }}</p>
-                                    </div>
-
+                                    <project-status value="{{ project.status }}"></project-status>
                                 </a>
                             </li>
                         </ul>
@@ -41,6 +36,9 @@
                                 {{ projectActivated.name }} <small>({{ projectActivated.progress }}%)</small>
 
                                 <div class="btn-group pull-right">
+                                    <a ng-href="#/projects/{{ projectActivated.id }}" class="btn btn-default btn-xs" title="Visualizar">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                     <a ng-href="#/projects/{{ projectActivated.id }}/edit" class="btn btn-default btn-xs" title="Editar">
                                         <i class="fa fa-pencil"></i>
                                     </a>
@@ -93,8 +91,8 @@
                                     <div class="task-list">
                                         <ul class="task-list-body">
                                             <li ng-repeat="task in projectActivated.tasks.data">
-                                                <label>
-                                                    <input type="checkbox" checked />
+                                                <label ng-class="{task_selected: task.status}">
+                                                    <input type="checkbox" ng-checked="task.status" ng-click="changeStatus(task)"/>
                                                     {{ task.name }}
                                                 </label>
                                             </li>

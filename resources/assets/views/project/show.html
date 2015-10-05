@@ -8,11 +8,7 @@
                     <p>{{ project.description }}</p>
                     <p>Previsão: {{ project.due_date | dateBr }}</p>
                     <p>Progresso: {{ project.progress }}%</p>
-                    <div ng-switch on="project.status">
-                        <span class="label label-danger" ng-switch-when="0">Pendente</span>
-                        <span class="label label-warning" ng-switch-when="1">Em andamento</span>
-                        <span class="label label-success" ng-switch-when="2">Concluido</span>
-                    </div>
+                    <project-status value="{{ project.status }}"></project-status>
                     <hr/>
                     <form class="form-inline" role="form" name="form" method="POST" ng-submit="save()">
                         <div class="form-group" ng-class="{'has-error': !form.member.$valid && form.member.$touched}">
@@ -60,7 +56,7 @@
                         </tbody>
                     </table>
                     <div>
-                        <a ng-href="#/project/{{ project.id }}/tasks" class="btn btn-warning btn-xs">Tarefas</a>
+                        <a ng-href="#/project/{{ project.id }}/tasks" class="btn btn-warning btn-xs">Tarefas ({{ project.tasks_count }})</a>
                         <a ng-href="#/project/{{ project.id }}/notes" class="btn btn-warning btn-xs">Notas</a>
                         <a ng-href="#/project/{{ project.id }}/files" class="btn btn-warning btn-xs">Arquivos</a>
                         <a ng-href="#/projects/{{ project.id }}/edit" class="btn btn-primary btn-xs">Editar</a>

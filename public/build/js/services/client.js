@@ -5,6 +5,10 @@ angular.module('codeProject.services')
             query: {
                 isArray: false,
             },
+            search: {
+                method:'GET',
+                isArray:true
+            },
             update: {
                 method: 'PUT'
             },

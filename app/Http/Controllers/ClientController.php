@@ -36,6 +36,9 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->query->get('paginate') === 'false'){
+            return $this->repository->all();
+        }
         return $this->repository->paginate($request->query->get('limit'));
     }
 
