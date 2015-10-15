@@ -1,5 +1,6 @@
 'use strict';
 
+//teste
 angular.module('codeProject.controllers', ['ngMessages', 'angular-oauth2']);
 angular.module('codeProject.services', ['ngResource']);
 angular.module('codeProject.directives', []);
@@ -284,19 +285,18 @@ angular.module('codeProject')
 
             // Refresh token when a `access_denied` error occurs.
             if ('access_denied' === data.rejection.data.error) {
+                /******************************************************************
                 httpBuffer.append(data.rejection.config, data.deferred);
-
                 if(!$rootScope.loginModalOpened){
                     var modalInstance = $modal.open({
                         templateUrl: 'build/html/templates/login-modal.html',
                         controller: 'LoginModalController',
                     });
-
                     $rootScope.loginModalOpened = true;
                 }
                 return;
+                *******************************************************************/
 
-                /*
                 if(!$rootScope.isRefreshingToken) {
                     $rootScope.isRefreshingToken = true;
                     return OAuth.getRefreshToken().then(function (response) {
@@ -310,7 +310,7 @@ angular.module('codeProject')
                         return data.deferred.resolve(response);
                     });
                 }
-                */
+                return;
             }
 
             // Redirect to `/login` with the `error_reason`.
