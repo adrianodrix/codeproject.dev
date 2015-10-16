@@ -26,6 +26,7 @@ class ProjectTaskTransformer extends TransformerAbstract
             'start_date'        => $model->start_date,
             'due_date'          => $model->due_date,
             'status'            => (int) $model->status,
+            'created_at'        => $model->created_at->format('Y-m-d H:i:s'),
         ];
     }
 }

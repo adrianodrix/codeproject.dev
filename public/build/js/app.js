@@ -20,6 +20,9 @@ angular.module('codeProject', [
     'http-auth-interceptor',
     'angularUtils.directives.dirPagination',
     'mgcrea.ngStrap.navbar',
+    'pusher-angular',
+    'ui-notification',
+    'angularMoment',
     'codeProject.controllers',
     'codeProject.services',
     'codeProject.directives',
@@ -31,6 +34,9 @@ angular.module('codeProject')
     .provider('codeProjectConfig', ['$httpParamSerializerProvider', function($httpParamSerializerProvider){
         var config = {
             baseUrl: 'http://codeproject.dev',
+            pusher: {
+                key: 'f99de3d9c1975b022e81',
+            },
             project: {
                 status: [
                     {'value': 0, 'label': 'Pendente'},
@@ -258,8 +264,38 @@ angular.module('codeProject')
     }]);
 
 angular.module('codeProject')
-    .run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth', function(
-        $rootScope, $location, $http, $modal, httpBuffer, OAuth) {
+    .run(['$rootScope', '$location', '$http', '$modal', '$cookies', '$pusher',
+        'httpBuffer', 'OAuth', 'codeProjectConfig', 'Notification', 'amMoment',
+        function($rootScope, $location, $http, $modal, $cookies, $pusher,
+                 httpBuffer, OAuth, codeProjectConfig, Notification, amMoment) {
+
+            amMoment.changeLocale('pt-br');
+
+        $rootScope.$on('pusher-build', function(event, data){
+            if(data.next.$$route.originalPath != '/login'){
+                if(OAuth.isAuthenticated){
+                    if (!window.client){
+                        window.client = new Pusher(codeProjectConfig.pusher.key);
+                        var pusher = $pusher(window.client);
+                        var channel = pusher.subscribe('user.'+ $cookies.getObject('user').id);
+                        channel.bind('CodeProject\\Events\\TaskWasIncluded',
+                            function(data) {
+                                Notification.primary('Tarefa '+ data.task.name + ', foi incluída!');
+                            }
+                        );
+                    }
+                }
+            }
+        });
+
+        $rootScope.$on('pusher-destroy', function(event, data){
+            if(data.next.$$route.originalPath == '/login'){
+                if (window.client) {
+                    window.client.disconnect();
+                    window.client = null;
+                }
+            }
+        });
 
         $rootScope.$on('$routeChangeStart', function(event, next, current){
             if (undefined != next){
@@ -271,6 +307,9 @@ angular.module('codeProject')
             } else {
                 $location.path('login');
             }
+
+            $rootScope.$emit('pusher-build', {next: next});
+            $rootScope.$emit('pusher-destroy', {next: next});
         });
 
         $rootScope.$on('$routeChangeSuccess', function(event, current, previous){

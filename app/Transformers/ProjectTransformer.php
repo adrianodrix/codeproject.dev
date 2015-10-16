@@ -27,6 +27,7 @@ class ProjectTransformer extends TransformerAbstract
             'status_str'    => $this->resolveStatus($model->status),
             'tasks_count'   => $model->tasks->count(),
             'tasks_opened'  => $this->countTasksOpened($model),
+            'created_at'    => $model->created_at->format('Y-m-d H:i:s'),
         ];
     }
 

@@ -69,7 +69,10 @@
                                         </div>
                                     </li>
                                     <li>
-                                        Prazo: <span class="pull-right text-orange">{{ project.due_date | dateBr}}</span>
+                                        Criação: <span class="pull-right text-orange" am-time-ago="project.created_at"></span>
+                                    </li>
+                                    <li>
+                                        Prazo: <span class="pull-right text-orange">{{ project.due_date | amDateFormat:'LL' }}</span>
                                     </li>
                                 </ul> <!-- /panel-list-unstyled -->
                             </div> <!-- /panel-body -->
@@ -88,75 +91,15 @@
 
                 <br/>
                 <div class="mini-timeline">
-                    <div class="list-item list-item-stacked text-boulder">
+                    <div class="list-item list-item-stacked text-boulder" ng-repeat="task in tasks">
                         <div class="clearfix">
                             <img src="http://mmn.silasribas.com.br/bundles/sonbase/geral/images/anonymous.png?2" alt="" class="avatar-sm rounded"/>
                             <p>
-                                <strong>Mudança de status em um projeto</strong>
+                                <strong>Uma nova tarefa foi incluída!</strong>
                                 <br/>
-                                <small>há alguns segundos</small>
+                                <small><span am-time-ago="task.created_at"></span></small>
                                 <br/>
-                                <span class="text-info">O status no novo site foi alterado para vencido</span>
-                            </p>
-                        </div>
-                    </div> <!-- /list-item -->
-                    <div class="list-item list-item-stacked text-boulder">
-                        <div class="clearfix">
-                            <img src="http://mmn.silasribas.com.br/bundles/sonbase/geral/images/anonymous.png?2" alt="" class="avatar-sm rounded"/>
-                            <p>
-                                <strong>Mudança de status em um projeto</strong>
-                                <br/>
-                                <small>há alguns segundos</small>
-                                <br/>
-                                <span class="text-info">O status no novo site foi alterado para vencido</span>
-                            </p>
-                        </div>
-                    </div> <!-- /list-item -->
-                    <div class="list-item list-item-stacked text-boulder">
-                        <div class="clearfix">
-                            <img src="http://mmn.silasribas.com.br/bundles/sonbase/geral/images/anonymous.png?2" alt="" class="avatar-sm rounded"/>
-                            <p>
-                                <strong>Mudança de status em um projeto</strong>
-                                <br/>
-                                <small>há alguns segundos</small>
-                                <br/>
-                                <span class="text-info">O status no novo site foi alterado para vencido</span>
-                            </p>
-                        </div>
-                    </div> <!-- /list-item -->
-                    <div class="list-item list-item-stacked text-boulder">
-                        <div class="clearfix">
-                            <img src="http://mmn.silasribas.com.br/bundles/sonbase/geral/images/anonymous.png?2" alt="" class="avatar-sm rounded"/>
-                            <p>
-                                <strong>Mudança de status em um projeto</strong>
-                                <br/>
-                                <small>há alguns segundos</small>
-                                <br/>
-                                <span class="text-info">O status no novo site foi alterado para vencido</span>
-                            </p>
-                        </div>
-                    </div> <!-- /list-item -->
-                    <div class="list-item list-item-stacked text-boulder">
-                        <div class="clearfix">
-                            <img src="http://mmn.silasribas.com.br/bundles/sonbase/geral/images/anonymous.png?2" alt="" class="avatar-sm rounded"/>
-                            <p>
-                                <strong>Mudança de status em um projeto</strong>
-                                <br/>
-                                <small>há alguns segundos</small>
-                                <br/>
-                                <span class="text-info">O status no novo site foi alterado para vencido</span>
-                            </p>
-                        </div>
-                    </div> <!-- /list-item -->
-                    <div class="list-item list-item-stacked text-boulder">
-                        <div class="clearfix">
-                            <img src="http://mmn.silasribas.com.br/bundles/sonbase/geral/images/anonymous.png?2" alt="" class="avatar-sm rounded"/>
-                            <p>
-                                <strong>Mudança de status em um projeto</strong>
-                                <br/>
-                                <small>há alguns segundos</small>
-                                <br/>
-                                <span class="text-info">O status no novo site foi alterado para vencido</span>
+                                <span class="text-info">{{ task.name }}</span>
                             </p>
                         </div>
                     </div> <!-- /list-item -->
