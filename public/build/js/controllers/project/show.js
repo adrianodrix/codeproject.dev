@@ -1,9 +1,22 @@
 angular.module('codeProject.controllers')
-    .controller('ProjectShowController', ['$scope', '$routeParams', 'Project', 'ProjectMember', 'User',
-        function($scope, $routeParams, Project, ProjectMember, User){
-            $scope.project = Project.get({id: $routeParams.id});
+    .controller('ProjectShowController', ['$scope', '$routeParams', '$location', 'Project', 'ProjectMember', 'User',
+        function($scope, $routeParams, $location, Project, ProjectMember, User){
             $scope.member = {};
             $scope.projectMember = new ProjectMember();
+
+            Project.get({
+                    id: $routeParams.id
+                }, function(result){
+
+                if (result.name != null) {
+                    $scope.project = result;
+                }
+
+                if (result.error != null) {
+                    alert(result.error);
+                    $location.path('home');
+                }
+            });
 
             $scope.getUsers = function (name){
                 return User.query({
