@@ -34,6 +34,7 @@ config.vendor_path_js = [
     config.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.js',
     config.bower_path + '/moment/min/moment-with-locales.min.js',
     config.bower_path + '/angular-moment/angular-moment.min.js',
+    config.bower_path + '/angular-loading-bar/build/loading-bar.min.js',
 ];
 
 //CSS Style Sheets
@@ -43,6 +44,7 @@ config.vendor_path_css = [
     config.bower_path + '/bootstrap/dist/css/bootstrap.min.css',
     config.bower_path + '/bootstrap/dist/css/bootstrap-theme.min.css',
     config.bower_path + '/angular-ui-notification/dist/angular-ui-notification.min.css',
+    config.bower_path + '/angular-loading-bar/build/loading-bar.min.css',
 ];
 
 //HTML, Fonts, Images

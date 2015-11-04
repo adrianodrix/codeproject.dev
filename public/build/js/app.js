@@ -23,6 +23,7 @@ angular.module('codeProject', [
     'pusher-angular',
     'ui-notification',
     'angularMoment',
+    'angular-loading-bar',
     'codeProject.controllers',
     'codeProject.services',
     'codeProject.directives',

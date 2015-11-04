@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="{{ asset('build/css/components.css') }}">
         <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('build/css/vendor/angular-ui-notification.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/css/vendor/loading-bar.min.css') }}">
     @else
         <link rel="stylesheet" href="{{ elixir('css/all.css') }}">
     @endif
@@ -61,6 +62,7 @@
     <script src="{{ asset('build/js/vendor/angular-ui-notification.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-moment.min.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/loading-bar.min.js') }}"></script>
 
     <!-- APP AND CONFIGS -->
     <script src="{{ asset('build/js/app.js') }}"></script>
