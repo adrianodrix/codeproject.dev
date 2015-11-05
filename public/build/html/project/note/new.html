@@ -5,33 +5,7 @@
                 <div class="panel-heading">Nova de Nota</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" name="form" method="POST" ng-submit="save()">
-                        <div class="form-group" ng-class="{'has-error': !form.title.$valid && form.title.$touched}">
-                            <label class="col-md-4 control-label">Titulo</label>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="title" ng-model="note.title" required>
-                                <div class="help-block" ng-messages="form.title.$error" ng-show="form.title.$touched">
-                                    <div ng-message="required">Campo obrigatório!</div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Note</label>
-                            <div class="col-md-6">
-                                <textarea class="form-control" name="note" ng-model="note.note" required></textarea>
-                                <div class="help-block" ng-messages="form.note.$error" ng-show="form.note.$touched">
-                                    <div ng-message="required">Campo obrigatório!</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">Salvar</button>
-                                <a ng-href="#/project/{{ project_id }}/notes" class="btn btn-success">Cancelar</a>
-                            </div>
-                        </div>
+                        <div ng-include="'build/html/project/note/form.html'"></div>
                     </form>
                 </div>
             </div>

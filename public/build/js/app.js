@@ -252,7 +252,7 @@ angular.module('codeProject')
             OAuthProvider.configure({
                 baseUrl: codeProjectConfigProvider.config.baseUrl,
                 clientId: 'appid1',
-                clientSecret: 'secret',
+                //clientSecret: 'secret',
                 grantPath: '/oauth/access_token',
             });
 
@@ -325,6 +325,17 @@ angular.module('codeProject')
 
             // Refresh token when a `access_denied` error occurs.
             if ('access_denied' === data.rejection.data.error) {
+
+                httpBuffer.append(data.rejection.config, data.deferred);
+                if(!$rootScope.loginModalOpened){
+                    var modalInstance = $modal.open({
+                        templateUrl: 'build/html/templates/refresh-modal.html',
+                        controller: 'RefreshModalController',
+                    });
+                    $rootScope.loginModalOpened = true;
+                }
+                return;
+
                 /******************************************************************
                 httpBuffer.append(data.rejection.config, data.deferred);
                 if(!$rootScope.loginModalOpened){
@@ -335,7 +346,7 @@ angular.module('codeProject')
                     $rootScope.loginModalOpened = true;
                 }
                 return;
-                *******************************************************************/
+
 
                 if(!$rootScope.isRefreshingToken) {
                     $rootScope.isRefreshingToken = true;
@@ -351,6 +362,7 @@ angular.module('codeProject')
                     });
                 }
                 return;
+                 *******************************************************************/
             }
 
             // Redirect to `/login` with the `error_reason`.

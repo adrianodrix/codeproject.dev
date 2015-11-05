@@ -49,6 +49,7 @@
     <script src="{{ asset('build/js/vendor/angular-resource.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-animate.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-messages.min.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/angular-locale_pt-br.js') }}"></script>
     <script src="{{ asset('build/js/vendor/ui-bootstrap-tpls.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/navbar.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}"></script>
@@ -63,6 +64,7 @@
     <script src="{{ asset('build/js/vendor/moment-with-locales.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/angular-moment.min.js') }}"></script>
     <script src="{{ asset('build/js/vendor/loading-bar.min.js') }}"></script>
+    <script src="{{ asset('build/js/vendor/blob-util.min.js') }}"></script>
 
     <!-- APP AND CONFIGS -->
     <script src="{{ asset('build/js/app.js') }}"></script>
@@ -83,6 +85,7 @@
     <!-- CONTROLLERS -->
     <script src="{{ asset('build/js/controllers/loginController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/loginModalController.js') }}"></script>
+    <script src="{{ asset('build/js/controllers/refreshModalController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/homeController.js') }}"></script>
     <script src="{{ asset('build/js/controllers/menuController.js') }}"></script>
 

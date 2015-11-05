@@ -21,6 +21,11 @@ class ProjectTask extends Model implements Transformable
         'status',
     ];
 
+    protected $dates = [
+        'start_date',
+        'due_date',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

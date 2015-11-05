@@ -7,7 +7,7 @@ angular.module('codeProject.services')
             },
             search: {
                 method:'GET',
-                isArray:true
+                isArray:false
             },
             update: {
                 method: 'PUT'

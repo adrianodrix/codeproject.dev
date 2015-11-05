@@ -4,6 +4,7 @@ namespace CodeProject\Http\Controllers;
 use Illuminate\Http\Request;
 use \CodeProject\Repositories\ClientRepository;
 use \CodeProject\Services\ClientService;
+use Illuminate\Http\Response;
 
 class ClientController extends Controller
 {
@@ -84,6 +85,14 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        return $this->service->destroy($id);
+        try {
+            $this->service->destroy($id);
+            return response('', 204);
+        } catch (\Exception $e) {
+            return Response::json([
+                "error" => true,
+                "message" => $e->getMessage()
+            ], 400);
+        }
     }
 }

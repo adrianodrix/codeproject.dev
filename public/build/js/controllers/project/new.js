@@ -1,6 +1,6 @@
 angular.module('codeProject.controllers')
-    .controller('ProjectNewController', ['$scope', '$location', 'Client', 'Project', 'codeProjectConfig',
-        function($scope, $location, Client, Project, codeProjectConfig){
+    .controller('ProjectNewController', ['$scope', '$location', '$q', 'Client', 'Project', 'codeProjectConfig',
+        function($scope, $location, $q, Client, Project, codeProjectConfig){
             $scope.title   = 'Novo Projeto';
             $scope.project = new Project();
             $scope.due_date = {
@@ -32,12 +32,21 @@ angular.module('codeProject.controllers')
             };
 
             $scope.getClients = function (name){
-                return Client.search({
-                    search: name,
-                    searchFields: 'name:like',
-                    limit: 10,
-                    paginate: false,
-                }).$promise;
+                var deffered = $q.defer();
+                Client.search({
+                        search: name,
+                        searchFields: 'name:like',
+                        limit:10,
+                    },
+                    function(data){
+                        deffered.resolve(data.data);
+                    },
+                    function(error){
+                        deffered.reject(error);
+                    }
+                );
+
+                return deffered.promise;
             };
 
             $scope.selectClient = function(client){

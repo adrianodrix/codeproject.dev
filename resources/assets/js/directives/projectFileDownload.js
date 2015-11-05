@@ -1,7 +1,7 @@
 angular.module('codeProject.directives')
     .directive('projectFileDownload',
-    ['$timeout', 'codeProjectConfig', 'ProjectFile',
-        function($timeout, codeProjectConfig, ProjectFile){
+    ['$timeout', '$window', 'codeProjectConfig', 'ProjectFile',
+        function($timeout, $window, codeProjectConfig, ProjectFile){
             return {
                 restrict: 'E',
                 templateUrl: codeProjectConfig.baseUrl + '/build/html/templates/projectFileDownload.html',
@@ -11,9 +11,13 @@ angular.module('codeProject.directives')
                         $(anchor).removeClass('disabled');
                         $(anchor).text('');
                         $(anchor).append($('<i class="glyphicon glyphicon-floppy-save"></i>'));
-                        $(anchor).attr({
-                            href: 'data:application-octet-stream;base64,'+ data.file,
-                            download: data.name +'.'+ data.extension,
+
+                        blobUtil.base64StringToBlob(data.file).then(function (blob) {
+                            // success
+                            $(anchor).attr({
+                                href: $window.URL.createObjectURL(blob, data.mime_type),
+                                download: data.name +'.'+ data.extension,
+                            });
                         });
 
                         $timeout(function(){

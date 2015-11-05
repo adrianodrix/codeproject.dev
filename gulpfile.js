@@ -35,6 +35,8 @@ config.vendor_path_js = [
     config.bower_path + '/moment/min/moment-with-locales.min.js',
     config.bower_path + '/angular-moment/angular-moment.min.js',
     config.bower_path + '/angular-loading-bar/build/loading-bar.min.js',
+    config.bower_path + '/angular-locale-pt-br/angular-locale_pt-br.js',
+    config.bower_path + '/blob-util/dist/blob-util.min.js',
 ];
 
 //CSS Style Sheets
