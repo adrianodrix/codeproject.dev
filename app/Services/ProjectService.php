@@ -149,12 +149,4 @@ class ProjectService
         }
         return false;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getAuthorizerId()
-    {
-        return \Authorizer::getResourceOwnerId();
-    }
 } 
