@@ -252,7 +252,7 @@ angular.module('codeProject')
             OAuthProvider.configure({
                 baseUrl: codeProjectConfigProvider.config.baseUrl,
                 clientId: 'appid1',
-                //clientSecret: 'secret',
+                clientSecret: 'secret',
                 grantPath: '/oauth/access_token',
             });
 
@@ -265,9 +265,9 @@ angular.module('codeProject')
     }]);
 
 angular.module('codeProject')
-    .run(['$rootScope', '$location', '$http', '$modal', '$cookies', '$pusher',
+    .run(['$rootScope', '$location', '$http', '$modal', '$cookies', '$pusher', '$filter',
         'httpBuffer', 'OAuth', 'codeProjectConfig', 'Notification', 'amMoment',
-        function($rootScope, $location, $http, $modal, $cookies, $pusher,
+        function($rootScope, $location, $http, $modal, $cookies, $pusher, $filter,
                  httpBuffer, OAuth, codeProjectConfig, Notification, amMoment) {
 
             amMoment.changeLocale('pt-br');
@@ -281,7 +281,21 @@ angular.module('codeProject')
                         var channel = pusher.subscribe('user.'+ $cookies.getObject('user').id);
                         channel.bind('CodeProject\\Events\\TaskWasIncluded',
                             function(data) {
-                                Notification.primary('Tarefa '+ data.task.name + ', foi incluída!');
+                                var msg = 'Tarefa: '+ data.task.name + ', foi incluída!';
+                                if (data.task.start_date){
+                                    msg = msg + '</br> Inicia em: '+ $filter('amDateFormat')(data.task.start_date, 'DD.MM.YYYY');
+                                }
+                                Notification.success(msg);
+                            }
+                        );
+
+                        channel.bind('CodeProject\\Events\\TaskWasChanged',
+                            function(data) {
+                                var msg = 'Tarefa: '+ data.task.name + ', foi alterada!';
+                                if (data.task.status == 1){
+                                    msg = msg + '</br><strong>Concluida!!!</strong>';
+                                }
+                                Notification.primary(msg);
                             }
                         );
                     }

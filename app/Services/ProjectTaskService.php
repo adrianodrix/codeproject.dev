@@ -39,9 +39,7 @@ class ProjectTaskService
     {
         try {
             $data['project_id'] = $projectId;
-
             $this->validator->with($data)->passesOrFail();
-
             return $this->repository->create($data);
         } catch (ValidatorException $e) {
             return [

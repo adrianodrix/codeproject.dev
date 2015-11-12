@@ -22,6 +22,19 @@ angular.module('codeProject.controllers')
             var channel = pusher.subscribe('user.'+ $cookies.getObject('user').id);
             channel.bind('CodeProject\\Events\\TaskWasIncluded',
                 function(data) {
+                    data.task.title = 'Nova tarefa incluida';
+                    if ($scope.tasks.length == 6){
+                        $scope.tasks.splice($scope.tasks.length - 1, 1);
+                    }
+                    $timeout(function(){
+                        $scope.tasks.unshift(data.task);
+                    }, 300);
+                }
+            );
+
+            channel.bind('CodeProject\\Events\\TaskWasChanged',
+                function(data) {
+                    data.task.title = 'Tarefa alterada';
                     if ($scope.tasks.length == 6){
                         $scope.tasks.splice($scope.tasks.length - 1, 1);
                     }

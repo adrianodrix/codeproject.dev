@@ -57,7 +57,6 @@ class ProjectService
         try {
             $data['owner_id'] = \Authorizer::getResourceOwnerId();
             $this->validator->with($data)->passesOrFail();
-
             return $this->repository->create($data);
         } catch(ValidatorException $e) {
             return [
