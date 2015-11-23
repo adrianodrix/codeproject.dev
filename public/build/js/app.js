@@ -1,11 +1,9 @@
 'use strict';
 
-//teste
-angular.module('codeProject.controllers', ['ngMessages', 'angular-oauth2']);
+angular.module('codeProject.controllers', ['ngMessages']);
 angular.module('codeProject.services', ['ngResource']);
 angular.module('codeProject.directives', []);
 angular.module('codeProject.filters', []);
-
 
 angular.module('codeProject', [
     'ngRoute',
